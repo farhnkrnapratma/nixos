@@ -32,6 +32,7 @@
         "chat.disableAIFeatures" = true;
         "debug.console.fontFamily" = "'JetBrains Mono', monospace";
         "editor.autoIndent" = "full";
+        "editor.formatOnSave" = true;
         "editor.defaultFormatter" = "jnoortheen.nix-ide";
         "editor.fontFamily" = "'JetBrains Mono', monospace";
         "editor.fontLigatures" = true;

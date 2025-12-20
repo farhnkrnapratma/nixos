@@ -1,0 +1,285 @@
+{
+  config,
+  modulesPath,
+  pkgs,
+  ...
+}:
+let
+  NixSchedule = {
+    automatic = true;
+    dates = "daily";
+    persistent = true;
+    randomizedDelaySec = "10min";
+  };
+in
+{
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+
+  # BEGIN
+  # WARNING: THIS IS EXPERIMENTAL! YOU ARE NOT SUGGESTED TO MERGE WHAT IS IN
+  #          HARDWARE-CONFIGURATION.NIX INTO CONFIGURATION.NIX UNLESS YOU KNOW
+  #          WHAT YOU ARE DOING!
+
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-label/ESP_SYSTEM";
+    fsType = "vfat";
+    label = "ESP_SYSTEM";
+    mountPoint = "/boot/efi";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
+  };
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
+    label = "nixos";
+    mountPoint = "/";
+  };
+
+  swapDevices = [
+    {
+      device = "/dev/disk/by-label/linux_swap";
+      label = "linux_swap";
+      priority = 5;
+    }
+  ];
+
+  # END.
+
+  boot = {
+    consoleLogLevel = 7;
+    initrd = {
+      availableKernelModules = [
+        "nvme"
+        "sd_mod"
+      ];
+      compressor = "zstd";
+      systemd = {
+        enable = true;
+        dbus.enable = true;
+        root = "gpt-auto";
+      };
+    };
+    kernelPackages = pkgs.linuxPackages_zen;
+    loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 20;
+        consoleMode = "auto";
+        editor = false;
+      };
+      timeout = 3;
+    };
+  };
+
+  console = {
+    enable = true;
+    earlySetup = true;
+    font = "ter-v16n";
+    keyMap = "us";
+    packages = [ pkgs.terminus_font ];
+  };
+
+  documentation = {
+    dev.enable = false;
+    doc.enable = false;
+    info.enable = false;
+    man.enable = false;
+    nixos.enable = false;
+  };
+
+  environment = {
+    cosmic.excludePackages = with pkgs; [
+      cosmic-edit
+      cosmic-files
+      cosmic-player
+      cosmic-store
+      cosmic-term
+      cosmic-reader
+      rygel
+    ];
+    shells = [ pkgs.fish ];
+  };
+
+  fonts.packages = with pkgs; [
+    adwaita-fonts
+    jetbrains-mono
+  ];
+
+  hardware = {
+    bluetooth.enable = false;
+    firmwareCompression = "zstd";
+  };
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "id_ID.UTF-8";
+    LC_IDENTIFICATION = "id_ID.UTF-8";
+    LC_MEASUREMENT = "C.UTF-8";
+    LC_MONETARY = "id_ID.UTF-8";
+    LC_NAME = "id_ID.UTF-8";
+    LC_NUMERIC = "C.UTF-8";
+    LC_PAPER = "id_ID.UTF-8";
+    LC_TELEPHONE = "id_ID.UTF-8";
+    LC_TIME = "C.UTF-8";
+  };
+
+  networking = {
+    hostName = "puffin";
+    enableIPv6 = true;
+    tempAddresses = "enabled";
+    timeServers = [
+      "0.id.pool.ntp.org"
+      "1.id.pool.ntp.org"
+      "2.id.pool.ntp.org"
+      "3.id.pool.ntp.org"
+    ];
+    nameservers = [
+      "1.1.1.1"
+      "9.9.9.9"
+    ];
+    networkmanager = {
+      enable = true;
+      dns = "systemd-resolved";
+      dhcp = "internal";
+      wifi = {
+        scanRandMacAddress = true;
+        powersave = false;
+        macAddress = "random";
+        backend = "iwd";
+      };
+      ethernet.macAddress = "random";
+      logLevel = "OFF";
+    };
+    nftables.enable = true;
+    firewall = {
+      enable = config.networking.nftables.enable;
+      backend = if config.networking.nftables.enable then "nftables" else "firewalld";
+      allowPing = true;
+      pingLimit = if config.networking.nftables.enable then "1/minute burst 5 packets" else null;
+      filterForward = true;
+      checkReversePath = "loose";
+    };
+  };
+
+  nix = {
+    enable = true;
+    checkAllErrors = true;
+    checkConfig = true;
+    gc = NixSchedule;
+    optimise = NixSchedule;
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      auto-optimise-store = true;
+    };
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  programs.steam = {
+    enable = true;
+    dedicatedServer.openFirewall = true;
+    remotePlay.openFirewall = true;
+  };
+
+  security = {
+    protectKernelImage = true;
+    rtkit.enable = true;
+    sudo-rs = {
+      enable = true;
+      execWheelOnly = true;
+      wheelNeedsPassword = false;
+    };
+  };
+
+  services = {
+    desktopManager = {
+      cosmic.enable = true;
+      cosmic.showExcludedPkgsWarning = false;
+      cosmic.xwayland.enable = true;
+    };
+    displayManager.cosmic-greeter.enable = true;
+    gnome = {
+      evolution-data-server.enable = true;
+      gnome-keyring.enable = true;
+      sushi.enable = true;
+    };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      jack.enable = true;
+      pulse.enable = true;
+    };
+    resolved = {
+      enable = true;
+      dnsovertls = "opportunistic";
+      dnssec = "allow-downgrade";
+      fallbackDns = [ "8.8.8.8" ];
+    };
+  };
+
+  system = {
+    autoUpgrade = {
+      enable = true;
+      allowReboot = true;
+      dates = "daily";
+      fixedRandomDelay = true;
+      flags = [
+        "--update-input"
+        "nixpkgs"
+        "--commit-lock-file"
+      ];
+      flake = "/etc/nixos";
+      operation = "switch";
+      randomizedDelaySec = "10min";
+      rebootWindow = {
+        lower = "01:00";
+        upper = "05:00";
+      };
+      runGarbageCollection = true;
+    };
+    stateVersion = "26.05";
+  };
+
+  time.timeZone = "Asia/Jakarta";
+
+  users = {
+    mutableUsers = false;
+    users.plucky = {
+      enable = true;
+      createHome = true;
+      description = "Plucky Puffin";
+      expires = "2030-01-01";
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "audio"
+        "video"
+      ];
+      hashedPassword = "$6$ASMi1cF9jL1HgY/X$dnUd2rGPXGB77FGry8odE/gTXOD62dZDiwfnB2/YTpjasF4c9VRD/5YoQiFhflwO0yn.XmxOTueLQAmCFgMfc.";
+      homeMode = "700";
+      ignoreShellProgramCheck = true;
+      isNormalUser = true;
+      shell = pkgs.fish;
+    };
+    users.root.hashedPassword = "$6$lJRYG1SZvo5hgu.j$ynhedN.4pNNY1s2wc4SaqxSaN9a6z0mMSKKwM38gWhXk04BPVAdRUc9riGna9d30uBeit2/8trVHAjjiK3iK3.";
+  };
+
+  xdg.portal.enable = true;
+
+  zramSwap = {
+    enable = true;
+    algorithm = "lz4";
+    memoryMax = 3221225472;
+    memoryPercent = 40;
+    priority = 10;
+  };
+}

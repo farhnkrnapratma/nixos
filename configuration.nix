@@ -1,6 +1,5 @@
 {
   config,
-  modulesPath,
   pkgs,
   ...
 }:
@@ -13,40 +12,7 @@ let
   };
 in
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-
-  # BEGIN
-  # WARNING: THIS IS EXPERIMENTAL! YOU ARE NOT SUGGESTED TO MERGE WHAT IS IN
-  #          HARDWARE-CONFIGURATION.NIX INTO CONFIGURATION.NIX UNLESS YOU KNOW
-  #          WHAT YOU ARE DOING!
-
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-label/ESP_SYSTEM";
-    fsType = "vfat";
-    label = "ESP_SYSTEM";
-    mountPoint = "/boot/efi";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
-    label = "nixos";
-    mountPoint = "/";
-  };
-
-  swapDevices = [
-    {
-      device = "/dev/disk/by-label/linux_swap";
-      label = "linux_swap";
-      priority = 5;
-    }
-  ];
-
-  # END.
+  imports = [ ./hardware-configuration.nix ];
 
   boot = {
     consoleLogLevel = 7;
@@ -56,12 +22,6 @@ in
         "sd_mod"
       ];
       compressor = "zstd";
-      systemd = {
-        enable = true;
-        dbus.enable = true;
-        emergencyAccess = true;
-        root = "gpt-auto";
-      };
     };
     kernelPackages = pkgs.linuxPackages_zen;
     loader = {
@@ -272,7 +232,7 @@ in
       isNormalUser = true;
       shell = pkgs.fish;
     };
-    users.root.hashedPassword = "$6$lJRYG1SZvo5hgu.j$ynhedN.4pNNY1s2wc4SaqxSaN9a6z0mMSKKwM38gWhXk04BPVAdRUc9riGna9d30uBeit2/8trVHAjjiK3iK3.";
+    users.root.hashedPassword = "!";
   };
 
   xdg.portal.enable = true;
@@ -282,6 +242,5 @@ in
     algorithm = "lz4";
     memoryMax = 3221225472;
     memoryPercent = 40;
-    priority = 10;
   };
 }

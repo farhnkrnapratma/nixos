@@ -18,13 +18,13 @@
       home-manager,
     }:
     let
+      nixos-config = ./configuration.nix;
+      pkgs = nixpkgs.legacyPackages.${system};
+      system = "x86_64-linux";
       users-config = {
         sharedModules = [ (import ./home/shared) ];
         users.plucky = import ./home/plucky;
       };
-      system = "x86_64-linux";
-      nixos-config = ./configuration.nix;
-      pkgs = nixpkgs.legacyPackages.${system};
     in
     {
       nixosConfigurations.puffin = nixpkgs.lib.nixosSystem {

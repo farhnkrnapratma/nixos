@@ -59,6 +59,7 @@ in
       systemd = {
         enable = true;
         dbus.enable = true;
+        emergencyAccess = true;
         root = "gpt-auto";
       };
     };
@@ -110,6 +111,7 @@ in
   fonts.packages = with pkgs; [
     adwaita-fonts
     jetbrains-mono
+    times-newer-roman
   ];
 
   hardware = {

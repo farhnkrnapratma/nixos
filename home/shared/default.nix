@@ -2,7 +2,7 @@
 {
   imports = [
     ./programs
-    ./packages.nix
+    ./packages
   ];
 
   home.stateVersion = "26.05";

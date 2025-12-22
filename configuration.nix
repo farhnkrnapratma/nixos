@@ -25,10 +25,7 @@ in
     };
     kernelPackages = pkgs.linuxPackages_zen;
     loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
-      };
+      efi.canTouchEfiVariables = true;
       systemd-boot = {
         enable = true;
         configurationLimit = 20;
@@ -71,7 +68,6 @@ in
   fonts.packages = with pkgs; [
     adwaita-fonts
     jetbrains-mono
-    times-newer-roman
   ];
 
   hardware = {

@@ -5,31 +5,14 @@
   ...
 }:
 {
-  imports = [ ./programs ];
+  imports = [
+    ./programs
+    ./packages.nix
+  ];
 
   home = rec {
     username = "plucky";
     homeDirectory = "/home/${username}";
-    packages = with pkgs; [
-      amberol
-      appflowy
-      baobab
-      blanket
-      equibop
-      exercise-timer
-      github-copilot-cli
-      keypunch
-      localsend
-      newsflash
-      onlyoffice-desktopeditors
-      planify
-      resources
-      shortwave
-      showtime
-      signal-desktop
-      spotify
-      telegram-desktop
-    ];
   };
   services.gpg-agent = {
     enable = true;

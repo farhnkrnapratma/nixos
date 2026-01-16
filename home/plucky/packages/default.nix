@@ -10,6 +10,7 @@
     github-copilot-cli
     keypunch
     localsend
+    microsoft-edge
     newsflash
     onlyoffice-desktopeditors
     planify

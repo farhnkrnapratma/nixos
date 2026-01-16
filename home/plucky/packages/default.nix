@@ -5,7 +5,7 @@
     appflowy
     baobab
     blanket
-    equibop
+    discord
     exercise-timer
     github-copilot-cli
     keypunch

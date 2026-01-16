@@ -1,4 +1,4 @@
 { ... }:
 {
-  imports = [ ./gpg-agent.nix ];
+    imports = [ ./gpg-agent.nix ];
 }

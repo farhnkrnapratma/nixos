@@ -42,6 +42,7 @@
         "editor.cursorStyle" = "underline";
         "editor.overtypeCursorStyle" = "underline";
         "editor.tabSize" = 4;
+        "editor.minimap.enabled" = false;
         "editor.tabCompletion" = "on";
         "explorer.confirmDelete" = false;
         "explorer.confirmDragAndDrop" = false;

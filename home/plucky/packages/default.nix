@@ -13,6 +13,7 @@
     newsflash
     onlyoffice-desktopeditors
     planify
+    protonvpn-gui
     resources
     shortwave
     showtime

@@ -14,7 +14,7 @@
     systemd = {
       enable = true;
       restartIfChanged = true;
-      target = "wayland-session.target";
+      target = "graphical-session.target";
     };
   };
 }

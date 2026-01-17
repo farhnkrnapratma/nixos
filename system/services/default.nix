@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   services = {
@@ -7,7 +7,15 @@
       cosmic.showExcludedPkgsWarning = false;
       cosmic.xwayland.enable = true;
     };
-    displayManager.cosmic-greeter.enable = true;
+    displayManager = {
+      cosmic-greeter.enable = true;
+      dms-greeter = {
+        enable = true;
+        package = pkgs.dms-shell;
+        compositor.name = "niri";
+        configHome = "/home/plucky";
+      };
+    };
     gnome = {
       evolution-data-server.enable = true;
       gnome-keyring.enable = true;

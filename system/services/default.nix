@@ -8,7 +8,7 @@
       cosmic.xwayland.enable = true;
     };
     displayManager = {
-      cosmic-greeter.enable = true;
+      #cosmic-greeter.enable = true;
       dms-greeter = {
         enable = true;
         package = pkgs.dms-shell;

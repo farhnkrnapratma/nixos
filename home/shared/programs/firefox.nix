@@ -1,10 +1,10 @@
 { config, ... }:
 {
-    programs.firefox = {
-        enable = true;
-        languagePacks = [
-            "en-US"
-            "id"
-        ];
-    };
+  programs.firefox = {
+    enable = true;
+    languagePacks = [
+      "en-US"
+      "id"
+    ];
+  };
 }

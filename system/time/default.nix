@@ -1,5 +1,5 @@
 { config, ... }:
 
 {
-    time.timeZone = "Asia/Jakarta";
+  time.timeZone = "Asia/Jakarta";
 }

@@ -1,10 +1,10 @@
 { config, ... }:
 {
-    documentation = {
-        dev.enable = false;
-        doc.enable = false;
-        info.enable = false;
-        man.enable = false;
-        nixos.enable = false;
-    };
+  documentation = {
+    dev.enable = false;
+    doc.enable = false;
+    info.enable = false;
+    man.enable = false;
+    nixos.enable = false;
+  };
 }

@@ -1,9 +1,9 @@
 { config, ... }:
 {
-    imports = [
-        ./programs
-        ./packages
-    ];
+  imports = [
+    ./programs
+    ./packages
+  ];
 
-    home.stateVersion = "26.05";
+  home.stateVersion = "26.05";
 }

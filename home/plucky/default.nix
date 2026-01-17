@@ -1,18 +1,18 @@
 {
-    config,
-    lib,
-    pkgs,
-    ...
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 {
-    imports = [
-        ./programs
-        ./packages
-        ./services
-    ];
+  imports = [
+    ./programs
+    ./packages
+    ./services
+  ];
 
-    home = rec {
-        username = "plucky";
-        homeDirectory = "/home/${username}";
-    };
+  home = rec {
+    username = "plucky";
+    homeDirectory = "/home/${username}";
+  };
 }

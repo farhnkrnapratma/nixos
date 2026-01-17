@@ -1,9 +1,9 @@
 { config, ... }:
 
 {
-    programs.steam = {
-        enable = true;
-        dedicatedServer.openFirewall = true;
-        remotePlay.openFirewall = true;
-    };
+  programs.steam = {
+    enable = true;
+    dedicatedServer.openFirewall = true;
+    remotePlay.openFirewall = true;
+  };
 }

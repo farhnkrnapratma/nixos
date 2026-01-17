@@ -21,9 +21,11 @@
     };
     resolved = {
       enable = true;
-      dnsovertls = "opportunistic";
-      dnssec = "allow-downgrade";
-      fallbackDns = [ "8.8.8.8" ];
+      settings.Resolve = {
+        DNSOverTLS = "opportunistic";
+        DNSSEC = "allow-downgrade";
+        FallbackDNS = [ "9.9.9.9" ];
+      };
     };
   };
 }

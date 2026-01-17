@@ -1,5 +1,8 @@
 { ... }:
 
 {
-  imports = [ ./steam ];
+  imports = [
+    ./dms-shell
+    ./steam
+  ];
 }

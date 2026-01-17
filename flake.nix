@@ -18,9 +18,9 @@
       home-manager,
     }:
     let
+      system = "x86_64-linux";
       nixos-config = import ./system;
       pkgs = nixpkgs.legacyPackages.${system};
-      system = "x86_64-linux";
       users-config = {
         sharedModules = [ (import ./home/shared) ];
         users.plucky = import ./home/plucky;

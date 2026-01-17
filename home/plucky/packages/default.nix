@@ -8,6 +8,7 @@
     discord
     exercise-timer
     github-copilot-cli
+    google-chrome
     keypunch
     localsend
     microsoft-edge

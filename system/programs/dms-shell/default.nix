@@ -9,7 +9,7 @@
     enableClipboardPaste = true;
     enableSystemMonitoring = true;
     enableDynamicTheming = true;
-    enableVPN = false;
+    enableVPN = true;
     quickshell.package = pkgs.quickshell;
     systemd = {
       enable = true;

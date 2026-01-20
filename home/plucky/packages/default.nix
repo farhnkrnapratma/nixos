@@ -22,5 +22,6 @@
     signal-desktop
     spotify
     telegram-desktop
+    tor-browser
   ];
 }

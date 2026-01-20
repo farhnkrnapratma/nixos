@@ -12,7 +12,20 @@
       dms-greeter = {
         enable = true;
         package = pkgs.dms-shell;
-        compositor.name = "niri";
+        compositor = {
+          name = "niri";
+          customConfig = ''
+            layout {
+              gaps 5
+              border {
+                off
+              }
+              focus-ring {
+                off
+              }
+            }
+          '';
+        };
         configHome = "/home/plucky";
       };
     };

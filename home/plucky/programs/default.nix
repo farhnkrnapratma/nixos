@@ -1,17 +1,15 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 let
   CodeIsEnabled = config.programs.vscode.enable;
   WhenVSCodeEnabled =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
+    { config
+    , lib
+    , pkgs
+    , ...
     }:
     let
       CodeOrNano = if CodeIsEnabled then "codium" else "nano";

@@ -11,7 +11,6 @@
     google-chrome
     keypunch
     localsend
-    microsoft-edge
     newsflash
     onlyoffice-desktopeditors
     planify
@@ -22,6 +21,5 @@
     signal-desktop
     spotify
     telegram-desktop
-    tor-browser
   ];
 }

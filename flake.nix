@@ -8,14 +8,15 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixos-hardware,
-      home-manager,
+    { self
+    , nixpkgs
+    , nixos-hardware
+    , home-manager
+    , treefmt-nix
     }:
     let
       system = "x86_64-linux";
@@ -25,6 +26,7 @@
         sharedModules = [ (import ./home/shared) ];
         users.plucky = import ./home/plucky;
       };
+      treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
     in
     {
       nixosConfigurations.puffin = nixpkgs.lib.nixosSystem {
@@ -46,5 +48,7 @@
           }
         ];
       };
+      formatter.${system} = treefmtEval.config.build.wrapper;
+      checks.${system}.formatting = treefmtEval.config.build.check self;
     };
 }

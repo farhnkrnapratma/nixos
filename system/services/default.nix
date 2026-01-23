@@ -8,26 +8,7 @@
       cosmic.xwayland.enable = true;
     };
     displayManager = {
-      #cosmic-greeter.enable = true;
-      dms-greeter = {
-        enable = true;
-        package = pkgs.dms-shell;
-        compositor = {
-          name = "niri";
-          customConfig = ''
-            layout {
-              gaps 5
-              border {
-                off
-              }
-              focus-ring {
-                off
-              }
-            }
-          '';
-        };
-        configHome = "/home/plucky";
-      };
+      cosmic-greeter.enable = true;
     };
     gnome = {
       evolution-data-server.enable = true;

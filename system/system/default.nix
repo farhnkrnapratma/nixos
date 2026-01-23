@@ -12,7 +12,7 @@
         "nixpkgs"
         "--commit-lock-file"
       ];
-      flake = "/etc/nixos";
+      flake = "/home/plucky/Projects/nixos";
       operation = "switch";
       randomizedDelaySec = "10min";
       rebootWindow = {

@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     aria2
     bat
-    cava
+    brave
     cosmic-ext-applet-caffeine
     cosmic-ext-applet-privacy-indicator
     cosmic-ext-applet-weather
@@ -12,13 +12,11 @@
     gnome-calendar
     gnome-characters
     gnome-clocks
-    khal
     loupe
     nautilus
     papers
     snapshot
     wl-clipboard
-    wtype
     yaru-theme
     zoxide
   ];

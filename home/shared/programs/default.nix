@@ -16,7 +16,6 @@ in
   imports = [
     WhenFishEnabled
     ./fastfetch.nix
-    ./firefox.nix
     ./fish.nix
     ./ghostty.nix
     ./starship.nix

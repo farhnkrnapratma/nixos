@@ -8,7 +8,6 @@
     discord
     exercise-timer
     github-copilot-cli
-    google-chrome
     keypunch
     localsend
     newsflash

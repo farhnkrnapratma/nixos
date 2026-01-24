@@ -7,7 +7,7 @@
     installBatSyntax = true;
     settings = {
       adjust-cell-height = "15%";
-      background-opacity = 1;
+      background-opacity = 0.9;
       cursor-style = "underline";
       cursor-style-blink = true;
       font-family = "JetBrains Mono";
@@ -16,8 +16,8 @@
       link-previews = true;
       shell-integration = if config.programs.fish.enable then "fish" else "detect";
       shell-integration-features = "no-cursor";
-      theme = "dark:TokyoNight,light:TokyoNight Day";
-      window-decoration = "auto";
+      theme = "dark:Detuned,light:TokyoNight Day";
+      window-decoration = "none";
       window-padding-balance = true;
       window-padding-x = 3;
       window-padding-y = 3;

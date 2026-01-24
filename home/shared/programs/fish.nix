@@ -3,13 +3,10 @@
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-      function fish_greeting
-        fastfetch
-      end
+      set fish_greeting
       function fish_right_prompt
         date +"%H:%M:%S"
       end
-      starship init fish | source
       zoxide init fish | source
     '';
     preferAbbrs = true;

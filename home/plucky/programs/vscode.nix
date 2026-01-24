@@ -30,11 +30,11 @@
       ];
       userSettings = {
         "chat.disableAIFeatures" = true;
-        "debug.console.fontFamily" = "'JetBrains Mono', monospace";
+        "debug.console.fontFamily" = "'Adwaita Mono', monospace";
         "editor.autoIndent" = "full";
         "editor.formatOnSave" = true;
         "editor.defaultFormatter" = "jnoortheen.nix-ide";
-        "editor.fontFamily" = "'JetBrains Mono', monospace";
+        "editor.fontFamily" = "'Adwaita Mono', monospace";
         "editor.fontLigatures" = true;
         "editor.fontSize" = 14;
         "editor.wordWrap" = "off";
@@ -48,8 +48,8 @@
         "explorer.confirmDragAndDrop" = false;
         "files.autoSave" = "onFocusChange";
         "redhat.telemetry.enabled" = false;
-        "scm.inputFontFamily" = "'JetBrains Mono', monospace";
-        "terminal.integrated.fontFamily" = "'JetBrains Mono', monospace";
+        "scm.inputFontFamily" = "'Adwaita Mono', monospace";
+        "terminal.integrated.fontFamily" = "'Adwaita Mono', monospace";
         "terminal.integrated.fontLigatures.enabled" = true;
         "terminal.integrated.fontLigatures.featureSettings" = "\"calt\" on, \"liga\" on";
         "terminal.integrated.cursorStyle" = "underline";

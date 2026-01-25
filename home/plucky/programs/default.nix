@@ -4,19 +4,19 @@
 , ...
 }:
 let
-  CodeIsEnabled = config.programs.vscode.enable;
-  WhenVSCodeEnabled =
+  CodiumIsEnabled = config.programs.vscode.enable;
+  WhenCodiumEnabled =
     { config
     , lib
     , pkgs
     , ...
     }:
     let
-      CodeOrNano = if CodeIsEnabled then "codium" else "nano";
+      CodiumOrNano = if CodiumIsEnabled then "codium" else "nano";
     in
     {
       home = {
-        packages = lib.mkIf CodeIsEnabled (
+        packages = lib.mkIf CodiumIsEnabled (
           with pkgs;
           [
             nixfmt
@@ -25,22 +25,22 @@ let
           ]
         );
         sessionVariables = {
-          EDITOR = CodeOrNano;
-          VISUAL = CodeOrNano;
+          EDITOR = CodiumOrNano;
+          VISUAL = CodiumOrNano;
         };
       };
       programs = {
-        gh.settings.editor = CodeOrNano;
-        git.settings.core.editor = CodeOrNano;
+        gh.settings.editor = CodiumOrNano;
+        git.settings.core.editor = CodiumOrNano;
       };
     };
 in
 {
   imports = [
-    WhenVSCodeEnabled
+    WhenCodiumEnabled
     ./gh.nix
     ./git.nix
     ./gpg.nix
-    ./vscode.nix
+    ./codium.nix
   ];
 }

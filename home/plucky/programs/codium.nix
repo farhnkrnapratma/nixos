@@ -1,4 +1,7 @@
-{ config, pkgs, ... }:
+{ config
+, pkgs
+, ...
+}:
 {
   programs.vscode = {
     enable = true;
@@ -10,9 +13,9 @@
         bierner.github-markdown-preview
         bmalehorn.vscode-fish
         editorconfig.editorconfig
+        enkia.tokyo-night
         github.vscode-github-actions
         github.vscode-pull-request-github
-        github.github-vscode-theme
         jgclark.vscode-todo-highlight
         jnoortheen.nix-ide
         mads-hartmann.bash-ide-vscode
@@ -33,7 +36,6 @@
         "debug.console.fontFamily" = "'Adwaita Mono', monospace";
         "editor.autoIndent" = "full";
         "editor.formatOnSave" = true;
-        "editor.defaultFormatter" = "jnoortheen.nix-ide";
         "editor.fontFamily" = "'Adwaita Mono', monospace";
         "editor.fontLigatures" = true;
         "editor.fontSize" = 14;

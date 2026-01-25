@@ -1,4 +1,6 @@
-{ config, ... }:
+{ config
+, ...
+}:
 
 {
   users.users.root.hashedPassword = "!";

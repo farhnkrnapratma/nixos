@@ -1,4 +1,6 @@
-{ config, ... }:
+{ config
+, ...
+}:
 let
   NixSchedule = {
     automatic = true;

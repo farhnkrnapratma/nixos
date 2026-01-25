@@ -1,4 +1,6 @@
-{ config, ... }:
+{ config
+, ...
+}:
 
 {
   time.timeZone = "Asia/Jakarta";

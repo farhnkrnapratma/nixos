@@ -1,4 +1,6 @@
-{ config, ... }:
+{ config
+, ...
+}:
 {
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "id_ID.UTF-8";

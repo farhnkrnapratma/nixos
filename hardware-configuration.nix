@@ -31,9 +31,4 @@
       "dmask=0077"
     ];
   };
-
-  hardware = {
-    bluetooth.enable = false;
-    firmwareCompression = "zstd";
-  };
 }

@@ -12,19 +12,20 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , nixos-hardware
-    , home-manager
-    , treefmt-nix
+    {
+      self,
+      nixpkgs,
+      nixos-hardware,
+      home-manager,
+      treefmt-nix,
     }:
     let
       system = "x86_64-linux";
-      nixos-config = import ./system;
+      nixos-config = import ./configuration.nix;
       pkgs = nixpkgs.legacyPackages.${system};
       users-config = {
-        sharedModules = [ (import ./home/shared) ];
-        users.plucky = import ./home/plucky;
+        sharedModules = [ (import ./home-manager-shared.nix) ];
+        users.plucky = import ./home-manager.nix;
       };
       treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
     in

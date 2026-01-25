@@ -12,12 +12,12 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixos-hardware,
-      home-manager,
-      treefmt-nix,
+    { self
+    , nixpkgs
+    , nixos-hardware
+    , home-manager
+    , treefmt-nix
+    ,
     }:
     let
       system = "x86_64-linux";

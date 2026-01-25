@@ -24,8 +24,8 @@
       nixos-config = import ./configuration.nix;
       pkgs = nixpkgs.legacyPackages.${system};
       users-config = {
-        sharedModules = [ (import ./home-manager-shared.nix) ];
-        users.plucky = import ./home-manager.nix;
+        sharedModules = [ (import ./home/shared.nix) ];
+        users.plucky = import ./home/plucky/home.nix;
       };
       treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
     in

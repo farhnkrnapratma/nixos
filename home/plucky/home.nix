@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   CodiumIsEnabled = config.programs.vscode.enable;
@@ -11,31 +12,34 @@ in
   home = rec {
     username = "plucky";
     homeDirectory = "/home/${username}";
-    packages = with pkgs; [
-      amberol
-      appflowy
-      baobab
-      blanket
-      discord
-      exercise-timer
-      github-copilot-cli
-      keypunch
-      localsend
-      newsflash
-      onlyoffice-desktopeditors
-      planify
-      protonvpn-gui
-      resources
-      shortwave
-      showtime
-      signal-desktop
-      spotify
-      telegram-desktop
-    ] ++ lib.optionals CodiumIsEnabled [
-      nixfmt
-      shellcheck
-      shfmt
-    ];
+    packages =
+      with pkgs;
+      [
+        amberol
+        appflowy
+        baobab
+        blanket
+        discord
+        exercise-timer
+        github-copilot-cli
+        keypunch
+        localsend
+        newsflash
+        onlyoffice-desktopeditors
+        planify
+        protonvpn-gui
+        resources
+        shortwave
+        showtime
+        signal-desktop
+        spotify
+        telegram-desktop
+      ]
+      ++ lib.optionals CodiumIsEnabled [
+        nixfmt
+        shellcheck
+        shfmt
+      ];
     sessionVariables = {
       EDITOR = CodiumOrNano;
       VISUAL = CodiumOrNano;
@@ -99,7 +103,7 @@ in
           "terminal.integrated.cursorBlinking" = true;
           "workbench.startupEditor" = "none";
           "workbench.iconTheme" = "material-icon-theme";
-          "workbench.colorTheme" = "GitHub Dark";
+          "workbench.colorTheme" = "Tokyo Night";
         };
       };
     };

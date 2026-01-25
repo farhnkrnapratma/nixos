@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 {
   home = {
@@ -10,9 +11,6 @@
       aria2
       bat
       brave
-      cosmic-ext-applet-caffeine
-      cosmic-ext-applet-privacy-indicator
-      cosmic-ext-applet-weather
       eza
       gnome-calculator
       gnome-calendar

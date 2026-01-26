@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   CodiumIsEnabled = config.programs.vscode.enable;
@@ -78,7 +79,6 @@ in
           "chat.disableAIFeatures" = true;
           "debug.console.fontFamily" = "'Adwaita Mono', monospace";
           "editor.autoIndent" = "full";
-          "editor.formatOnSave" = true;
           "editor.fontFamily" = "'Adwaita Mono', monospace";
           "editor.fontLigatures" = true;
           "editor.fontSize" = 14;

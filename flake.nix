@@ -20,20 +20,15 @@
     ,
     }:
     let
-      system = "x86_64-linux";
-      nixos-config = import ./configuration.nix;
-      pkgs = nixpkgs.legacyPackages.${system};
-      users-config = {
-        sharedModules = [ (import ./home/shared.nix) ];
-        users.plucky = import ./home/plucky/home.nix;
-      };
+      arch = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${arch};
       treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
     in
     {
       nixosConfigurations.puffin = nixpkgs.lib.nixosSystem {
-        system = system;
+        system = arch;
         modules = [
-          nixos-config
+          (import ./configuration.nix)
           nixos-hardware.nixosModules.lenovo-thinkpad-t480s
           home-manager.nixosModules.home-manager
           {
@@ -41,15 +36,16 @@
               backupCommand = "${pkgs.trash-cli}/bin/trash";
               backupFileExtension = "bak";
               overwriteBackup = true;
+              sharedModules = [ (import ./home/shared.nix) ];
               useGlobalPkgs = true;
+              users.plucky = import ./home/plucky/home.nix;
               useUserPackages = true;
               verbose = true;
-            }
-            // users-config;
+            };
           }
         ];
       };
-      formatter.${system} = treefmtEval.config.build.wrapper;
-      checks.${system}.formatting = treefmtEval.config.build.check self;
+      formatter.${arch} = treefmtEval.config.build.wrapper;
+      checks.${arch}.formatting = treefmtEval.config.build.check self;
     };
 }

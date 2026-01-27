@@ -158,7 +158,6 @@ in
   nixpkgs.config.allowUnfree = true;
 
   programs = {
-    chromium.enable = true;
     steam = {
       enable = true;
       dedicatedServer.openFirewall = true;

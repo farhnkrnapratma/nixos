@@ -47,17 +47,17 @@
             return 1
           end
 
-          test -n "$mode"; or set mode all
+          test -n "$mode"; or set mode a
 
           echo "[1/3] Adding change(s) to the staging area..."
           switch $mode
-            case all
+            case a
               git add -A
               or begin
                 echo "[!] Failed at step 1/3"
                 return 1
               end
-            case file
+            case f
               if test (count $file) -eq 0
                   echo "[!] No files specified for mode 'file'"
                   return 1

@@ -59,8 +59,14 @@
               end
             case f
               if test (count $file) -eq 0
-                  echo "[!] No files specified for mode 'file'"
+                echo "[!] No files specified for mode 'f'"
+                return 1
+              end
+              for f in $file
+                if not test -e "$f"
+                  echo "[!] File not found: $f"
                   return 1
+                end
               end
               git add $file
               or begin

@@ -20,11 +20,9 @@ in
         github-copilot-cli
         keypunch
         localsend
-        newsflash
         onlyoffice-desktopeditors
         planify
         resources
-        shortwave
         signal-desktop
         telegram-desktop
       ]

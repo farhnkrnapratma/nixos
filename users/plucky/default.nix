@@ -17,6 +17,7 @@ in
         appflowy
         blanket
         discord
+        element-desktop
         github-copilot-cli
         keypunch
         localsend

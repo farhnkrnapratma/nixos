@@ -134,27 +134,28 @@
               return 1
             end
             echo "[4/7] Done."
+            
+            echo "[5/7] Rebuilding host system..."
+            sudo nixos-rebuild switch --flake .#puffin
+            or begin
+              echo "[!] Failed at step 5/7"
+              cd $_cdir
+              return 1
+            end
+            echo "[5/7] Done."
+
+            echo "[6/7] Deleting older generations..."
+            sudo nix-collect-garbage -d
+            or begin
+              echo "[!] Failed at step 6/7"
+              cd $_cdir
+              return 1
+            end
+            echo "[6/7] Done."
           else
             echo "[!] Skipping..."
+            echo "[!] Done."
           end
-
-          echo "[5/7] Rebuilding host system..."
-          sudo nixos-rebuild switch --flake .#puffin
-          or begin
-            echo "[!] Failed at step 5/7"
-            cd $_cdir
-            return 1
-          end
-          echo "[5/7] Done."
-
-          echo "[6/7] Deleting older generations..."
-          sudo nix-collect-garbage -d
-          or begin
-            echo "[!] Failed at step 6/7"
-            cd $_cdir
-            return 1
-          end
-          echo "[6/7] Done."
 
           echo "[7/7] Back to last directory..."
           cd $_cdir

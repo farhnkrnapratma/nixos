@@ -2,6 +2,7 @@
   description = "A flake for my NixOS and Home Manager configuration";
 
   inputs = {
+    self.submodules = true;
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
@@ -18,32 +19,26 @@
     , home-manager
     , treefmt-nix
     ,
-    }:
+    }@inputs:
     let
       arch = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${arch};
-      treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+      treefmtModule =
+        { pkgs
+        , ...
+        }:
+
+        {
+          projectRootFile = "flake.nix";
+          programs.nixpkgs-fmt.enable = true;
+        };
+      treefmtEval = treefmt-nix.lib.evalModule pkgs treefmtModule;
     in
     {
       nixosConfigurations.puffin = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
         system = arch;
-        modules = [
-          (import ./configuration.nix)
-          nixos-hardware.nixosModules.lenovo-thinkpad-t480s
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              backupCommand = "${pkgs.trash-cli}/bin/trash";
-              backupFileExtension = "bak";
-              overwriteBackup = true;
-              sharedModules = [ (import ./home/shared.nix) ];
-              useGlobalPkgs = true;
-              users.plucky = import ./home/plucky/home.nix;
-              useUserPackages = true;
-              verbose = true;
-            };
-          }
-        ];
+        modules = [ ./configuration.nix ];
       };
       formatter.${arch} = treefmtEval.config.build.wrapper;
       checks.${arch}.formatting = treefmtEval.config.build.check self;

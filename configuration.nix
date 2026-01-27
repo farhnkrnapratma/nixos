@@ -1,4 +1,5 @@
 { config
+, inputs
 , lib
 , pkgs
 , ...
@@ -12,7 +13,11 @@ let
   };
 in
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480s
+    ./hardware-configuration.nix
+  ];
   boot = {
     consoleLogLevel = 7;
     initrd = {
@@ -72,6 +77,17 @@ in
   hardware = {
     bluetooth.enable = false;
     firmwareCompression = "zstd";
+  };
+
+  home-manager = {
+    backupCommand = "${pkgs.trash-cli}/bin/trash";
+    backupFileExtension = "bak";
+    overwriteBackup = true;
+    sharedModules = [ (import ./users/shared) ];
+    useGlobalPkgs = true;
+    users.plucky = import ./users/plucky;
+    useUserPackages = true;
+    verbose = true;
   };
 
   i18n.extraLocaleSettings = {

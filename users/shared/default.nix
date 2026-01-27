@@ -18,6 +18,7 @@
       loupe
       nautilus
       papers
+      showtime
       snapshot
       wl-clipboard
       yaru-theme
@@ -55,7 +56,7 @@
       installBatSyntax = true;
       settings = {
         adjust-cell-height = "15%";
-        background-opacity = 0.9;
+        background-opacity = 1;
         cursor-style = "underline";
         cursor-style-blink = true;
         font-family = "JetBrains Mono";

@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 let
   CodiumIsEnabled = config.programs.vscode.enable;
@@ -15,22 +14,21 @@ in
     packages =
       with pkgs;
       [
-        amberol
         appflowy
-        baobab
         blanket
         discord
-        exercise-timer
         github-copilot-cli
         keypunch
         localsend
         newsflash
         onlyoffice-desktopeditors
         planify
+        proton-authenticator
+        proton-pass
+        protonmail-desktop
         protonvpn-gui
         resources
         shortwave
-        showtime
         signal-desktop
         spotify
         telegram-desktop
@@ -40,9 +38,9 @@ in
         shellcheck
         shfmt
       ];
-    sessionVariables = {
+    sessionVariables = rec {
       EDITOR = CodiumOrNano;
-      VISUAL = CodiumOrNano;
+      VISUAL = EDITOR;
     };
   };
 
@@ -70,7 +68,6 @@ in
           ms-python.python
           ms-python.vscode-pylance
           pkief.material-icon-theme
-          redhat.java
           rust-lang.rust-analyzer
           tamasfe.even-better-toml
           unifiedjs.vscode-mdx
@@ -86,13 +83,12 @@ in
           "editor.cursorSmoothCaretAnimation" = "on";
           "editor.cursorStyle" = "underline";
           "editor.overtypeCursorStyle" = "underline";
-          "editor.tabSize" = 4;
+          "editor.tabSize" = 2;
           "editor.minimap.enabled" = false;
           "editor.tabCompletion" = "on";
           "explorer.confirmDelete" = false;
           "explorer.confirmDragAndDrop" = false;
           "files.autoSave" = "onFocusChange";
-          "redhat.telemetry.enabled" = false;
           "scm.inputFontFamily" = "'Adwaita Mono', monospace";
           "terminal.integrated.fontFamily" = "'Adwaita Mono', monospace";
           "terminal.integrated.fontLigatures.enabled" = true;
@@ -100,7 +96,6 @@ in
           "terminal.integrated.cursorStyle" = "underline";
           "terminal.integrated.cursorStyleInactive" = "line";
           "terminal.integrated.cursorBlinking" = true;
-          "workbench.startupEditor" = "none";
           "workbench.iconTheme" = "material-icon-theme";
           "workbench.colorTheme" = "Tokyo Night";
         };
@@ -134,7 +129,7 @@ in
       maintenance = {
         enable = true;
         repositories = [
-          "/etc/nixos"
+          "/home/plucky/Projects/nixos"
           "/home/plucky/Projects/data"
         ];
         timers = {

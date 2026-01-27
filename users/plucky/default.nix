@@ -23,14 +23,9 @@ in
         newsflash
         onlyoffice-desktopeditors
         planify
-        proton-authenticator
-        proton-pass
-        protonmail-desktop
-        protonvpn-gui
         resources
         shortwave
         signal-desktop
-        spotify
         telegram-desktop
       ]
       ++ lib.optionals CodiumIsEnabled [
@@ -50,7 +45,6 @@ in
       mutableExtensionsDir = false;
       profiles.default = {
         extensions = with pkgs.vscode-extensions; [
-          astro-build.astro-vscode
           bierner.github-markdown-preview
           bmalehorn.vscode-fish
           editorconfig.editorconfig
@@ -59,20 +53,13 @@ in
           github.vscode-pull-request-github
           jnoortheen.nix-ide
           mads-hartmann.bash-ide-vscode
-          ms-python.debugpy
-          ms-python.flake8
-          ms-python.mypy-type-checker
-          ms-python.pylint
           ms-python.python
-          ms-python.vscode-pylance
           pkief.material-icon-theme
           rust-lang.rust-analyzer
           tamasfe.even-better-toml
-          unifiedjs.vscode-mdx
         ];
         userSettings = {
           "chat.disableAIFeatures" = true;
-          "debug.console.fontFamily" = "'Adwaita Mono', monospace";
           "editor.autoIndent" = "full";
           "editor.fontFamily" = "'Adwaita Mono', monospace";
           "editor.fontLigatures" = true;
@@ -87,7 +74,6 @@ in
           "explorer.confirmDelete" = false;
           "explorer.confirmDragAndDrop" = false;
           "files.autoSave" = "onFocusChange";
-          "scm.inputFontFamily" = "'Adwaita Mono', monospace";
           "terminal.integrated.fontFamily" = "'Adwaita Mono', monospace";
           "terminal.integrated.fontLigatures.enabled" = true;
           "terminal.integrated.fontLigatures.featureSettings" = "\"calt\" on, \"liga\" on";

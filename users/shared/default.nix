@@ -91,6 +91,7 @@
         end
 
         function update
+          set flakesNeedUpdate false
           set _cdir (pwd)
 
           echo "[1/7] Change directory to flake repository..."
@@ -102,11 +103,16 @@
           echo "[1/7] Done."
 
           echo "[2/7] Updating flakes..."
-          nix flake update
-          or begin
-            echo "[!] Failed at step 2/7"
-            cd $_cdir
-            return 1
+          if test -z (nix flake update >/dev/null 2>&1)
+            echo "[!] No flakes updates available"
+          else
+            set flakesNeedUpdate true
+            nix flake update
+            or begin
+              echo "[!] Failed at step 2/7"
+              cd $_cdir
+              return 1
+            end
           end
           echo "[2/7] Done."
 
@@ -119,14 +125,18 @@
           end
           echo "[3/7] Done."
 
-          echo "[4/7] Pushing changes to remote repository..."
-          commit "nixos: update flake" all
-          or begin
-            echo "[!] Failed at step 4/7"
-            cd $_cdir
-            return 1
+          if flakesNeedUpdate
+            echo "[4/7] Pushing changes to remote repository..."
+            commit "nixos: update flake" all
+            or begin
+              echo "[!] Failed at step 4/7"
+              cd $_cdir
+              return 1
+            end
+            echo "[4/7] Done."
+          else
+            echo "[!] Skipping..."
           end
-          echo "[4/7] Done."
 
           echo "[5/7] Rebuilding host system..."
           sudo nixos-rebuild switch --flake .#puffin

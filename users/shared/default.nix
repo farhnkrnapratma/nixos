@@ -3,6 +3,9 @@
 , pkgs
 , ...
 }:
+let
+  flakePath = "/home/plucky/Projects/nixos";
+in
 {
   home = {
     stateVersion = "26.05";
@@ -183,10 +186,10 @@
         l = "eza -lahgmuU --smart-group";
         ls = "eza";
         ngc = "sudo nix-collect-garbage -d";
-        nfu = "nix flake update";
+        nfu = "nix flake update --flake ${flakePath}";
         nft = "nix fmt";
-        nrd = "sudo nixos-rebuild dry-run --flake";
-        nrs = "sudo nixos-rebuild switch --flake";
+        nrd = "sudo nixos-rebuild dry-run --flake ${flakePath}";
+        nrs = "sudo nixos-rebuild switch --flake ${flakePath}";
         x = "exit";
       };
     };

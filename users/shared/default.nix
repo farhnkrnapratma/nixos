@@ -134,7 +134,7 @@
               return 1
             end
             echo "[4/7] Done."
-            
+
             echo "[5/7] Rebuilding host system..."
             sudo nixos-rebuild switch --flake .#puffin
             or begin
@@ -153,7 +153,7 @@
             end
             echo "[6/7] Done."
           else
-            echo "[!] Skipping..."
+            echo "[!] Skipping step [4-6]..."
             echo "[!] Done."
           end
 

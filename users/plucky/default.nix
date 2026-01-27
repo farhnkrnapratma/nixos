@@ -34,7 +34,6 @@ in
         telegram-desktop
       ]
       ++ lib.optionals CodiumIsEnabled [
-        nixfmt
         shellcheck
         shfmt
       ];
@@ -58,7 +57,6 @@ in
           enkia.tokyo-night
           github.vscode-github-actions
           github.vscode-pull-request-github
-          jgclark.vscode-todo-highlight
           jnoortheen.nix-ide
           mads-hartmann.bash-ide-vscode
           ms-python.debugpy

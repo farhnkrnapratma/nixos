@@ -125,7 +125,7 @@
           end
           echo "[3/7] Done."
 
-          if test $flakesNeedUpdate
+          if test "$flakesNeedUpdate" = true
             echo "[4/7] Pushing changes to remote repository..."
             commit "nixos: update flake" all
             or begin

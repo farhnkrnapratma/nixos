@@ -58,7 +58,7 @@
                 return 1
               end
             case file
-              if test (count $files) -eq 0
+              if test (count $file) -eq 0
                   echo "[!] No files specified for mode 'file'"
                   return 1
               end
@@ -70,6 +70,7 @@
             case '*'
               echo "Invalid mode: $mode"
               return 1
+          end
           echo "[1/3] Done."
 
           echo "[2/3] Committing staged changes..."
@@ -90,69 +91,69 @@
         end
 
         function update
-            set _cdir (pwd)
+          set _cdir (pwd)
 
-            echo "[1/7] Change directory to flake repository..."
-            cd /home/plucky/Projects/nixos
-            or begin
-              echo "[!] Failed at step 1/7"
-              return 1
-            end
-            echo "[1/7] Done."
+          echo "[1/7] Change directory to flake repository..."
+          cd /home/plucky/Projects/nixos
+          or begin
+            echo "[!] Failed at step 1/7"
+            return 1
+          end
+          echo "[1/7] Done."
 
-            echo "[2/7] Updating flakes..."
-            nix flake update
-            or begin
-              echo "[!] Failed at step 2/7"
-              cd $_cdir
-              return 1
-            end
-            echo "[2/7] Done."
-
-            echo "[3/7] Formatting repository..."
-            nix fmt
-            or begin
-              echo "[!] Failed at step 3/7"
-              cd $_cdir
-              return 1
-            end
-            echo "[3/7] Done."
-
-            echo "[4/7] Pushing changes to remote repository..."
-            commit "nixos: update flake" all
-            or begin
-              echo "[!] Failed at step 4/7"
-              cd $_cdir
-              return 1
-            end
-            echo "[4/7] Done."
-
-            echo "[5/7] Rebuilding host system..."
-            sudo nixos-rebuild switch --flake .#puffin
-            or begin
-              echo "[!] Failed at step 5/7"
-              cd $_cdir
-              return 1
-            end
-            echo "[5/7] Done."
-
-            echo "[6/7] Deleting older generations..."
-            sudo nix-collect-garbage -d
-            or begin
-              echo "[!] Failed at step 6/7"
-              cd $_cdir
-              return 1
-            end
-            echo "[6/7] Done."
-
-            echo "[7/7] Back to last directory..."
+          echo "[2/7] Updating flakes..."
+          nix flake update
+          or begin
+            echo "[!] Failed at step 2/7"
             cd $_cdir
-            or begin
-              echo "[!] Failed at step 7/7"
-              cd $_cdir
-              return 1
-            end
-            echo "[7/7] Done."
+            return 1
+          end
+          echo "[2/7] Done."
+
+          echo "[3/7] Formatting repository..."
+          nix fmt
+          or begin
+            echo "[!] Failed at step 3/7"
+            cd $_cdir
+            return 1
+          end
+          echo "[3/7] Done."
+
+          echo "[4/7] Pushing changes to remote repository..."
+          commit "nixos: update flake" all
+          or begin
+            echo "[!] Failed at step 4/7"
+            cd $_cdir
+            return 1
+          end
+          echo "[4/7] Done."
+
+          echo "[5/7] Rebuilding host system..."
+          sudo nixos-rebuild switch --flake .#puffin
+          or begin
+            echo "[!] Failed at step 5/7"
+            cd $_cdir
+            return 1
+          end
+          echo "[5/7] Done."
+
+          echo "[6/7] Deleting older generations..."
+          sudo nix-collect-garbage -d
+          or begin
+            echo "[!] Failed at step 6/7"
+            cd $_cdir
+            return 1
+          end
+          echo "[6/7] Done."
+
+          echo "[7/7] Back to last directory..."
+          cd $_cdir
+          or begin
+            echo "[!] Failed at step 7/7"
+            cd $_cdir
+            return 1
+          end
+          echo "[7/7] Done."
         end
 
         zoxide init fish | source

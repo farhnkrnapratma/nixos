@@ -23,15 +23,10 @@
     let
       arch = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${arch};
-      treefmtModule =
-        { pkgs
-        , ...
-        }:
-
-        {
-          projectRootFile = "flake.nix";
-          programs.nixpkgs-fmt.enable = true;
-        };
+      treefmtModule = {
+        projectRootFile = "flake.nix";
+        programs.nixpkgs-fmt.enable = true;
+      };
       treefmtEval = treefmt-nix.lib.evalModule pkgs treefmtModule;
     in
     {

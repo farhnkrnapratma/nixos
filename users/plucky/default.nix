@@ -58,29 +58,38 @@ in
           tamasfe.even-better-toml
         ];
         userSettings = {
-          "chat.disableAIFeatures" = true;
-          "editor.autoIndent" = "full";
-          "editor.fontFamily" = "'Adwaita Mono', monospace";
-          "editor.fontLigatures" = true;
-          "editor.fontSize" = 14;
-          "editor.wordWrap" = "off";
-          "editor.cursorSmoothCaretAnimation" = "on";
-          "editor.cursorStyle" = "underline";
-          "editor.overtypeCursorStyle" = "underline";
-          "editor.tabSize" = 2;
-          "editor.minimap.enabled" = false;
-          "editor.tabCompletion" = "on";
-          "explorer.confirmDelete" = false;
-          "explorer.confirmDragAndDrop" = false;
-          "files.autoSave" = "onFocusChange";
-          "terminal.integrated.fontFamily" = "'Adwaita Mono', monospace";
-          "terminal.integrated.fontLigatures.enabled" = true;
-          "terminal.integrated.fontLigatures.featureSettings" = "\"calt\" on, \"liga\" on";
-          "terminal.integrated.cursorStyle" = "underline";
-          "terminal.integrated.cursorStyleInactive" = "line";
-          "terminal.integrated.cursorBlinking" = true;
-          "workbench.iconTheme" = "material-icon-theme";
-          "workbench.colorTheme" = "Tokyo Night";
+          chat.disableAIFeatures = true;
+          editor = {
+            autoIndent = "full";
+            fontFamily = "'Adwaita Mono', monospace";
+            fontLigatures = true;
+            fontSize = 14;
+            wordWrap = "off";
+            cursorSmoothCaretAnimation = "on";
+            cursorStyle = "underline";
+            overtypeCursorStyle = "underline";
+            tabSize = 2;
+            minimap.enabled = false;
+            tabCompletion = "on";
+          };
+          explorer = {
+            confirmDelete = false;
+            confirmDragAndDrop = false;
+          };
+          files.autoSave = "onFocusChange";
+          terminal.integrated = {
+            fontFamily = "'Adwaita Mono', monospace";
+            fontLigatures.enabled = true;
+            fontLigatures.featureSettings = "\"calt\" on, \"liga\" on";
+            cursorStyle = "underline";
+            cursorStyleInactive = "line";
+            cursorBlinking = true;
+          };
+          workbench = {
+            iconTheme = "material-icon-theme";
+            colorTheme = "Tokyo Night";
+            startupEditor = "none";
+          };
         };
       };
     };

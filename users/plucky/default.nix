@@ -62,7 +62,7 @@ in
           chat.disableAIFeatures = true;
           editor = {
             autoIndent = "full";
-            fontFamily = "'Adwaita Mono', monospace";
+            fontFamily = "'Fira Code', monospace";
             fontLigatures = true;
             fontSize = 14;
             wordWrap = "off";
@@ -79,7 +79,7 @@ in
           };
           files.autoSave = "onFocusChange";
           terminal.integrated = {
-            fontFamily = "'Adwaita Mono', monospace";
+            fontFamily = "'Fira Code', monospace";
             fontLigatures.enabled = true;
             fontLigatures.featureSettings = "\"calt\" on, \"liga\" on";
             cursorStyle = "underline";

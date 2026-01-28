@@ -88,7 +88,7 @@ in
           };
           workbench = {
             iconTheme = "material-icon-theme";
-            colorTheme = "Tokyo Night";
+            colorTheme = "GitHub Dark Dimmed";
             startupEditor = "none";
           };
         };

@@ -211,11 +211,6 @@ in
       allowReboot = true;
       dates = "daily";
       fixedRandomDelay = true;
-      flags = [
-        "--update-input"
-        "nixpkgs"
-        "--commit-lock-file"
-      ];
       flake = "/home/plucky/Projects/nixos";
       operation = "switch";
       randomizedDelaySec = "10min";

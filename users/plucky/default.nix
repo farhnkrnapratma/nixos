@@ -64,7 +64,6 @@ in
             autoIndent = "full";
             autoIndentOnPaste = true;
             cursorBlinking = "smooth";
-            experimentalGpuAcceleration = "on";
             fontFamily = "'Fira Code', monospace";
             fontLigatures = true;
             fontSize = 14;

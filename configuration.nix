@@ -64,6 +64,7 @@
 
   fonts.packages = with pkgs; [
     adwaita-fonts
+    fira-code
     jetbrains-mono
   ];
 

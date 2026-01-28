@@ -14,6 +14,7 @@ in
       bat
       brave
       eza
+      flameshot
       gnome-calculator
       gnome-calendar
       gnome-characters

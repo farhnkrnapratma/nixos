@@ -4,14 +4,7 @@
 , pkgs
 , ...
 }:
-let
-  NixSchedule = {
-    automatic = true;
-    dates = "daily";
-    persistent = true;
-    randomizedDelaySec = "10min";
-  };
-in
+
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -90,16 +83,20 @@ in
     verbose = true;
   };
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "id_ID.UTF-8";
-    LC_IDENTIFICATION = "id_ID.UTF-8";
-    LC_MEASUREMENT = "C.UTF-8";
-    LC_MONETARY = "id_ID.UTF-8";
-    LC_NAME = "id_ID.UTF-8";
-    LC_NUMERIC = "C.UTF-8";
-    LC_PAPER = "id_ID.UTF-8";
-    LC_TELEPHONE = "id_ID.UTF-8";
-    LC_TIME = "C.UTF-8";
+  i18n = {
+    defaultCharset = "UTF-8";
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "id_ID.UTF-8";
+      LC_IDENTIFICATION = "id_ID.UTF-8";
+      LC_MEASUREMENT = "C.UTF-8";
+      LC_MONETARY = "id_ID.UTF-8";
+      LC_NAME = "id_ID.UTF-8";
+      LC_NUMERIC = "C.UTF-8";
+      LC_PAPER = "id_ID.UTF-8";
+      LC_TELEPHONE = "id_ID.UTF-8";
+      LC_TIME = "C.UTF-8";
+    };
   };
 
   networking = {
@@ -136,12 +133,17 @@ in
     };
   };
 
-  nix = {
+  nix = rec {
     enable = true;
     checkAllErrors = true;
     checkConfig = true;
-    gc = NixSchedule;
-    optimise = NixSchedule;
+    gc = {
+      automatic = true;
+      dates = "daily";
+      persistent = true;
+      randomizedDelaySec = "10min";
+    };
+    optimise = gc;
     settings = {
       experimental-features = [
         "nix-command"

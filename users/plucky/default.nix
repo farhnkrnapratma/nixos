@@ -64,7 +64,7 @@ in
             autoIndent = "full";
             autoIndentOnPaste = true;
             cursorBlinking = "smooth";
-            fontFamily = "'Fira Code', monospace";
+            fontFamily = "'JetBrains Mono', monospace";
             fontLigatures = true;
             fontSize = 14;
             inertialScroll = true;
@@ -120,7 +120,7 @@ in
             cursorStyleInactive = "line";
             defaultProfile.linux = "fish";
             enableImages = true;
-            fontFamily = "'Fira Code', monospace";
+            fontFamily = "'JetBrains Mono', monospace";
             fontLigatures.enabled = true;
             gpuAcceleration = "on";
             smoothScrolling = true;

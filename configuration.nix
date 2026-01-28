@@ -80,7 +80,7 @@
     useGlobalPkgs = true;
     users.plucky = import ./users/plucky;
     useUserPackages = true;
-    verbose = true;
+    verbose = false;
   };
 
   i18n = {

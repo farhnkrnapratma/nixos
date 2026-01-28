@@ -112,16 +112,17 @@ in
           echo "[1/7] Done."
 
           echo "[2/7] Updating flakes..."
-          if test -z (nix flake update >/dev/null 2>&1)
+          nix flake update
+          or begin
+            echo "[!] Failed at step 2/7"
+            cd $_cdir
+            return 1
+          end
+
+          if git diff --quiet -- flake.lock
             echo "[!] No flakes updates available"
           else
             set flakesNeedUpdate true
-            nix flake update
-            or begin
-              echo "[!] Failed at step 2/7"
-              cd $_cdir
-              return 1
-            end
           end
           echo "[2/7] Done."
 

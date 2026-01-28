@@ -112,10 +112,6 @@ in
       "2.id.pool.ntp.org"
       "3.id.pool.ntp.org"
     ];
-    nameservers = [
-      "1.1.1.1"
-      "9.9.9.9"
-    ];
     networkmanager = {
       enable = true;
       dns = "systemd-resolved";
@@ -197,10 +193,23 @@ in
     };
     resolved = {
       enable = true;
+
       settings.Resolve = {
         DNSOverTLS = "opportunistic";
         DNSSEC = "allow-downgrade";
-        FallbackDNS = [ "9.9.9.9" ];
+        DNS = [
+          "1.1.1.1#cloudflare-dns.com"
+          "[2606:4700:4700::1111]#cloudflare-dns.com"
+        ];
+        FallbackDNS = [
+          "9.9.9.9#dns.quad9.net"
+          "[2620:fe::fe]#dns.quad9.net"
+        ];
+        LLMNR = "no";
+        MulticastDNS = "no";
+        Cache = "yes";
+        DNSStubListener = "yes";
+        StaleRetentionSec = "300";
       };
     };
   };

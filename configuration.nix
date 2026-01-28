@@ -57,6 +57,7 @@
       cosmic-store
       cosmic-term
       cosmic-reader
+      cosmic-screenshot
       rygel
     ];
     shells = [ pkgs.fish ];

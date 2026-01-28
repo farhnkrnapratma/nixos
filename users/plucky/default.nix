@@ -62,34 +62,82 @@ in
           chat.disableAIFeatures = true;
           editor = {
             autoIndent = "full";
+            autoIndentOnPaste = true;
+            cursorBlinking = "smooth";
+            experimentalGpuAcceleration = "on";
             fontFamily = "'Fira Code', monospace";
             fontLigatures = true;
             fontSize = 14;
+            inertialScroll = true;
             wordWrap = "off";
             cursorSmoothCaretAnimation = "on";
             cursorStyle = "underline";
             overtypeCursorStyle = "underline";
+            smoothScrolling = true;
             tabSize = 2;
+            trimWhitespaceOnDelete = true;
+            unfoldOnClickAfterEndOfLine = true;
             minimap.enabled = false;
             tabCompletion = "on";
+            wordWrapColumn = 100;
           };
           explorer = {
             confirmDelete = false;
             confirmDragAndDrop = false;
           };
-          files.autoSave = "onFocusChange";
+          extensions = {
+            autoCheckUpdates = false;
+            autoUpdate = false;
+            closeExtensionDetailsOnViewChange = true;
+            ignoreRecommendations = true;
+            verifySignature = false;
+          };
+          files = {
+            autoSave = "onFocusChange";
+            autoSaveWhenNoErrors = true;
+            autoSaveWorkspaceFilesOnly = true;
+            eol = "\n";
+            insertFinalNewline = true;
+            simpleDialog.enable = true;
+            trimFinalNewlines = true;
+          };
+          scm = {
+            alwaysShowActions = true;
+            alwaysShowRepositories = true;
+            defaultViewMode = "tree";
+            providerCountBadge = "auto";
+            repositories.explorer = true;
+          };
+          search = {
+            defaultViewMode = "tree";
+            showLineNumbers = true;
+            smartCase = true;
+          };
           terminal.integrated = {
-            fontFamily = "'Fira Code', monospace";
-            fontLigatures.enabled = true;
-            fontLigatures.featureSettings = "\"calt\" on, \"liga\" on";
+            accessibleViewFocusOnCommandExecution = true;
+            accessibleViewPreserveCursorPosition = true;
+            cursorBlinking = true;
             cursorStyle = "underline";
             cursorStyleInactive = "line";
-            cursorBlinking = true;
+            defaultProfile.linux = "fish";
+            enableImages = true;
+            fontFamily = "'Fira Code', monospace";
+            fontLigatures.enabled = true;
+            gpuAcceleration = "on";
+            smoothScrolling = true;
           };
+          update.showReleaseNotes = false;
+          window.autoDetectColorScheme = true;
           workbench = {
+            editor.showTabIndex = true;
+            externalBrowser = "/etc/profiles/per-user/plucky/bin/brave";
             iconTheme = "material-icon-theme";
             colorTheme = "GitHub Dark Dimmed";
+            preferredDarkColorTheme = "GitHub Dark Dimmed";
+            preferredLightColorTheme = "GitHub Light Default";
             startupEditor = "none";
+            tips.enabled = false;
+            tree.renderIndentGuides = "always";
           };
         };
       };

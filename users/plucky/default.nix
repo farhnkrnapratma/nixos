@@ -47,8 +47,9 @@ in
           bierner.github-markdown-preview
           bmalehorn.vscode-fish
           editorconfig.editorconfig
-          enkia.tokyo-night
+          egirlcatnip.adwaita-github-theme
           github.vscode-github-actions
+          github.github-vscode-theme
           github.vscode-pull-request-github
           jnoortheen.nix-ide
           mads-hartmann.bash-ide-vscode

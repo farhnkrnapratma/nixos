@@ -19,6 +19,7 @@ in
       gnome-calendar
       gnome-characters
       gnome-clocks
+      grim
       loupe
       nautilus
       papers

@@ -139,7 +139,7 @@ in
 
           if test "$flakesNeedUpdate" = true
             echo "[4/7] Pushing changes to remote repository..."
-            commit "nixos: update flake" all
+            commit "nixos: update flake"
             or begin
               echo "[!] Failed at step 4/7"
               cd $_cdir

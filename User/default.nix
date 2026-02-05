@@ -144,80 +144,99 @@ in
         set fish_greeting
 
         function fish_right_prompt
-          date +"%H:%M:%S"
+          set -l duration $CMD_DURATION
+          set -l parts
+
+          if test -n "$duration" -a "$duration" -gt 1000
+            if test $duration -gt 60000
+              set -a parts (set_color --bold --background 1c1c1c d7af5f)(math -s1 $duration / 60000)"m"
+            else
+              set -a parts (set_color --bold --background 1c1c1c d7af5f)(math -s1 $duration / 1000)"s"
+            end
+          else if test -n "$duration"
+            set -a parts (set_color --bold --background 1c1c1c 2e8b57)$duration"ms"
+          else
+            set -a parts (set_color --bold --background 1c1c1c ffffff)"0ms"
+          end
+
+          set -a parts (set_color --bold --background 1c1c1c 5f87d7)(date +"%a %d %b")
+          set -a parts (set_color --bold --background 1c1c1c 5fd7d7)(date +"%H:%M:%S")
+
+          set -l sep (set_color --bold --background 1c1c1c ffffff)
+          set -l normal (set_color normal)
+
+          echo -n $sep"❰"(string join $sep"❙" $parts)$sep"❱ "$normal
         end
 
         function shell
-          set cmd --command fish --interactive --private
+          set -l cmd --command fish --interactive --private
+
           if test -f "flake.nix"
-              nix shell $cmd
+            nix shell $cmd
           else if test (count $argv) -eq 0
-              echo "[!] No packages specified and no 'flake.nix' file found in the working directory"
-              return 1
+            echo "[!] No packages specified and no 'flake.nix' file found in the working directory"
+            return 1
           else
-              nix shell $argv $cmd
+            nix shell $argv $cmd
           end
         end
 
         function commit
-          git rev-parse --is-inside-work-tree >/dev/null 2>&1
-          or begin
-              echo "[!] Not in a git repository"
-              return 1
+          if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
+            echo "[!] Not in a git repository"
+            return 1
           end
 
           set -l cmsg $argv[1]
           set -l mode $argv[2]
           set -l files $argv[3..-1]
 
-          test -n "$cmsg"
-          or begin
-              echo "[!] Commit messages cannot be empty"
-              return 1
+          if test -z "$cmsg"
+            echo "[!] Commit messages cannot be empty"
+            return 1
           end
 
           test -n "$mode"; or set mode a
 
           echo "[1/3] Adding change(s) to the staging area..."
           switch $mode
-              case a
-                  git add -A
-              case f
-                  if test (count $files) -eq 0
-                      echo "[!] No files specified for mode 'f'"
-                      return 1
-                  end
-                  for f in $files
-                      test -e "$f"
-                      or begin
-                          echo "[!] File not found: $f"
-                          return 1
-                      end
-                  end
-                  git add $files
-              case '*'
-                  echo "[!] Invalid mode: $mode"
+            case a
+              if not git add -A
+                echo "[!] Failed at step 1/3"
+                return 1
+              end
+            case f
+              if test (count $files) -eq 0
+                echo "[!] No files specified for mode 'f'"
+                return 1
+              end
+              for f in $files
+                if not test -e "$f"
+                  echo "[!] File not found: $f"
                   return 1
-          end
-          or begin
-              echo "[!] Failed at step 1/3"
+                end
+              end
+              if not git add $files
+                echo "[!] Failed at step 1/3"
+                return 1
+              end
+            case '*'
+              echo "[!] Invalid mode: $mode"
               return 1
           end
           echo "[1/3] Done."
 
           echo "[2/3] Committing staged changes..."
-          git commit -s -m "$cmsg"
-          or begin
-              echo "[!] Failed at step 2/3"
-              return 1
+          if not git commit -s -m "$cmsg"
+            echo "[!] Failed at step 2/3"
+            return 1
           end
           echo "[2/3] Done."
 
           echo "[3/3] Pushing commits..."
-          git push
-          or begin
-              echo "[!] Failed at step 3/3"
-              return 1
+          if not git push
+            echo "[!] Failed at step 3/3"
+            return 1
           end
           echo "[3/3] Done."
         end
@@ -226,47 +245,62 @@ in
           set -l orig_dir (pwd)
           set -l flakes_updated false
 
-          function _fail --argument-names step
-              echo "[!] Failed at step $step"
-              cd $orig_dir 2>/dev/null
-              return 1
-          end
-
           echo "[1/7] Change directory to flake repository..."
-          cd ${my.path.flake}; or _fail "1/7"
+          if not cd ${my.path.flake}
+            echo "[!] Failed at step 1/7"
+            return 1
+          end
           echo "[1/7] Done."
 
           echo "[2/7] Updating flakes..."
-          nix flake update; or _fail "2/7"
+          if not nix flake update
+            echo "[!] Failed at step 2/7"
+            cd $orig_dir 2>/dev/null
+            return 1
+          end
           git diff --quiet -- flake.lock; or set flakes_updated true
           test "$flakes_updated" = false; and echo "[!] No flakes updates available"
           echo "[2/7] Done."
 
           echo "[3/7] Formatting repository..."
-          nix fmt; or _fail "3/7"
+          if not nix fmt
+            echo "[!] Failed at step 3/7"
+            cd $orig_dir 2>/dev/null
+            return 1
+          end
           echo "[3/7] Done."
 
           if test "$flakes_updated" = true
-              echo "[4/7] Pushing changes to remote repository..."
-              commit "root: updated flake lock file"; or _fail "4/7"
-              echo "[4/7] Done."
+            echo "[4/7] Pushing changes to remote repository..."
+            if not commit "root: updated flake lock file"
+              echo "[!] Failed at step 4/7"
+              cd $orig_dir 2>/dev/null
+              return 1
+            end
+            echo "[4/7] Done."
 
-              echo "[5/7] Rebuilding host system..."
-              sudo nixos-rebuild switch --flake; or _fail "5/7"
-              echo "[5/7] Done."
+            echo "[5/7] Rebuilding host system..."
+            if not sudo nixos-rebuild switch --flake ${my.path.flake}
+              echo "[!] Failed at step 5/7"
+              cd $orig_dir 2>/dev/null
+              return 1
+            end
+            echo "[5/7] Done."
 
-              echo "[6/7] Deleting older generations..."
-              sudo nix-collect-garbage -d; or _fail "6/7"
-              echo "[6/7] Done."
+            echo "[6/7] Deleting older generations..."
+            if not sudo nix-collect-garbage -d
+              echo "[!] Failed at step 6/7"
+              cd $orig_dir 2>/dev/null
+              return 1
+            end
+            echo "[6/7] Done."
           else
-              echo "[!] Skipping step [4-6]... Done."
+            echo "[!] Skipping step [4-6]... Done."
           end
 
           echo "[7/7] Back to last directory..."
-          cd $orig_dir; or _fail "7/7"
+          cd $orig_dir
           echo "[7/7] Done."
-
-          functions -e _fail
         end
       '';
       preferAbbrs = true;

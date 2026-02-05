@@ -248,7 +248,7 @@ in
 
           if test "$flakes_updated" = true
               echo "[4/7] Pushing changes to remote repository..."
-              commit "nixos: update flake"; or _fail "4/7"
+              commit "root: updated flake lock file"; or _fail "4/7"
               echo "[4/7] Done."
 
               echo "[5/7] Rebuilding host system..."

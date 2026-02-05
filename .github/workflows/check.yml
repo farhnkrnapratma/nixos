@@ -1,0 +1,41 @@
+name: NixOS Build & Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.nix'
+      - 'flake.lock'
+      - '.github/workflows/**'
+
+jobs:
+  nixos:
+    name: NixOS CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v14
+
+      - name: Setup Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v8
+
+      - name: Format code
+        run: nix fmt
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-format code [skip ci]"
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+
+      - name: Run flake check
+        run: nix flake check
+
+      - name: Build NixOS configuration
+        run: nix build .#nixosConfigurations.dotdev.config.system.build.toplevel

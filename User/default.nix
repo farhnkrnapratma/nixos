@@ -38,8 +38,8 @@ in
       gnome-calculator
       gnome-characters
       gnome-clocks
-      joplin-desktop
       loupe
+      memos
       nautilus
       onlyoffice-desktopeditors
       papers
@@ -51,6 +51,7 @@ in
       telegram-desktop
       # CLI
       codeberg-cli
+      codex
       gemini-cli
       github-copilot-cli
       glab

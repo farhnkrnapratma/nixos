@@ -39,7 +39,6 @@ in
       gnome-characters
       gnome-clocks
       loupe
-      memos
       nautilus
       onlyoffice-desktopeditors
       papers

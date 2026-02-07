@@ -45,9 +45,7 @@ in
       planify
       resources
       seahorse
-      signal-desktop
       snapshot
-      telegram-desktop
       # CLI
       codeberg-cli
       codex

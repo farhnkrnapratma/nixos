@@ -33,7 +33,6 @@ in
     stateVersion = my.tag;
     packages = with pkgs; [
       # GUI
-      brave
       discord
       gnome-calculator
       gnome-characters

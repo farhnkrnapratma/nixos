@@ -46,6 +46,8 @@ in
       resources
       seahorse
       snapshot
+      vivaldi
+      vivaldi-ffmpeg-codecs
       # CLI
       codeberg-cli
       codex

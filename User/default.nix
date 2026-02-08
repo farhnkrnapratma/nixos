@@ -574,19 +574,105 @@ in
     pinentry.package = pkgs.pinentry-all;
   };
 
-  xdg.userDirs = {
+  xdg = {
     enable = true;
-    createDirectories = true;
-    desktop = null;
-    documents = "${my.path.home}/Documents";
-    download = "${my.path.home}/Downloads";
-    music = null;
-    pictures = "${my.path.home}/Pictures";
-    publicShare = null;
-    templates = null;
-    videos = null;
-    extraConfig = {
-      XDG_PROJECTS_DIR = my.path.projects;
+    dataFile.icons = {
+      enable = true;
+      ignorelinks = true;
+      recursive = true;
+      source = "${my.path.flake}/User/Files/Icons";
+      target = "${config.xdg.dataHome}/icons";
+    };
+    desktopEntries =
+      let
+        appId = "${my.user.id}.WebApp";
+        browserBin = "${pkgs.vivaldi}/bin/vivaldi";
+        EntryShared = {
+          type = "Application";
+          prefersNonDefaultGPU = true;
+          settings = {
+            OnlyShowIn = [ "COSMIC" ];
+            SingleMainWindow = true;
+          };
+        };
+      in
+      {
+        "${appId}.GitHub" = {
+          name = "GitHub";
+          genericName = "GitHub";
+          comment = "GitHub is where people build software";
+          exec = "${browserBin} --app=https://github.com";
+          icon = "${appId}.GitHub";
+          categories = [ "Development" ];
+          settings = {
+            Keywords = "development;git;github";
+            StartupWMClass = "github.com";
+          };
+        }
+        // EntryShared;
+        "${appId}.Instagram" = {
+          name = "Instagram";
+          genericName = "Instagram";
+          comment = "Share what you're into with the people who get you";
+          exec = "${browserBin} --app=https://instagram.com";
+          icon = "${appId}.Instagram";
+          categories = [
+            "Network"
+            "Social"
+          ];
+          settings = {
+            Keywords = "social;media;instagram;photos";
+            StartupWMClass = "instagram.com";
+          };
+        }
+        // EntryShared;
+        "${appId}.WhatsApp" = {
+          name = "WhatsApp";
+          genericName = "WhatsApp Web";
+          comment = "Secure and Reliable Free Private Messaging and Calling";
+          exec = "${browserBin} --app=https://web.whatsapp.com";
+          icon = "${appId}.WhatsApp";
+          categories = [
+            "Network"
+            "InstantMessaging"
+          ];
+          settings = {
+            Keywords = "chat;messaging;whatsapp;communication";
+            StartupWMClass = "web.whatsapp.com";
+          };
+        }
+        // EntryShared;
+        "${appId}.YouTube" = {
+          name = "YouTube";
+          genericName = "YouTube";
+          comment = "Share your videos with friends, family, and the world";
+          exec = "${browserBin} --app=https://youtube.com";
+          icon = "${appId}.YouTube";
+          categories = [
+            "Network"
+            "AudioVideo"
+          ];
+          settings = {
+            Keywords = "video;streaming;youtube;media";
+            StartupWMClass = "youtube.com";
+          };
+        }
+        // EntryShared;
+      };
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      desktop = null;
+      documents = "${my.path.home}/Documents";
+      download = "${my.path.home}/Downloads";
+      music = null;
+      pictures = "${my.path.home}/Pictures";
+      publicShare = null;
+      templates = null;
+      videos = null;
+      extraConfig = {
+        XDG_PROJECTS_DIR = my.path.projects;
+      };
     };
   };
 }

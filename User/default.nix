@@ -580,7 +580,7 @@ in
       enable = true;
       ignorelinks = true;
       recursive = true;
-      source = "${my.path.flake}/User/Files/Icons";
+      source = "./Files/Icons";
       target = "${config.xdg.dataHome}/icons";
     };
     desktopEntries =

@@ -9,14 +9,14 @@ rec {
     edit = "codium --wait"; # default code editor
   };
   path = rec {
-    home = "/home/${user.name}"; # path to home directory
-    projects = "${home}/Projects"; # path to works directory
-    flake = "${projects}/nixos"; # path to system flake
+    home = builtins.toPath "/home/${user.name}"; # path to home directory
+    projects = builtins.toPath "${home}/Projects"; # path to works directory
+    flake = builtins.toPath "${projects}/nixos"; # path to system flake
   };
   part = rec {
-    boot = "/dev/disk/by-partlabel/EFI"; # boot partition
-    root = "/dev/disk/by-partlabel/NixOS"; # root partition
+    boot = builtins.toPath "/dev/disk/by-partlabel/EFI"; # boot partition
+    root = builtins.toPath "/dev/disk/by-partlabel/NixOS"; # root partition
     luks = "luks"; # label for luks encrypted partition
-    mapper = "/dev/mapper/${luks}"; # block device mapper
+    mapper = builtins.toPath "/dev/mapper/${luks}"; # block device mapper
   };
 }

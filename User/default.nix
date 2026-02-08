@@ -34,9 +34,11 @@ in
     packages = with pkgs; [
       # GUI
       discord
+      element-desktop
       gnome-calculator
       gnome-characters
       gnome-clocks
+      halloy
       loupe
       nautilus
       onlyoffice-desktopeditors

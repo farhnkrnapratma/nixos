@@ -591,7 +591,7 @@ in
           type = "Application";
           prefersNonDefaultGPU = true;
           settings = {
-            OnlyShowIn = [ "COSMIC" ];
+            OnlyShowIn = "COSMIC";
             SingleMainWindow = true;
           };
         };

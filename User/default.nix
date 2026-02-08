@@ -616,10 +616,7 @@ in
           comment = "Share what you're into with the people who get you";
           exec = "${browserBin} --app=https://instagram.com";
           icon = "${appId}.Instagram";
-          categories = [
-            "Network"
-            "Social"
-          ];
+          categories = [ "Network" ];
           settings = {
             Keywords = "social;media;instagram;photos";
             StartupWMClass = "instagram.com";

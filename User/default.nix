@@ -592,7 +592,7 @@ in
           prefersNonDefaultGPU = true;
           settings = {
             OnlyShowIn = "COSMIC";
-            SingleMainWindow = true;
+            SingleMainWindow = "true";
           };
         };
       in

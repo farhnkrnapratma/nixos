@@ -38,7 +38,6 @@ in
       gnome-calculator
       gnome-characters
       gnome-clocks
-      halloy
       loupe
       nautilus
       onlyoffice-desktopeditors

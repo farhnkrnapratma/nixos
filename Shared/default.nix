@@ -1,4 +1,4 @@
-{
+rec {
   aos = "x86_64-linux"; # arch and os
   tag = "26.05"; # always prefer unstable
   user = {

@@ -6,7 +6,7 @@ rec {
     name = "farhnkrnapratma"; # username
     guid = 1202; # group and user id
     desc = "Farhan Kurnia Pratama"; # full name
-    host = "dotdev"; # host name
+    host = "dev"; # host name
     edit = "codium --wait"; # default code editor
   };
   path = rec {

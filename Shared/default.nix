@@ -2,7 +2,7 @@ rec {
   aos = "x86_64-linux"; # arch and os
   tag = "26.05"; # always prefer unstable
   user = rec {
-    id = "${host}.${name}"; # reverse domain name identifier
+    rdns = "${host}.${name}"; # reverse domain name identifier
     name = "farhnkrnapratma"; # username
     guid = 1202; # group and user id
     desc = "Farhan Kurnia Pratama"; # full name

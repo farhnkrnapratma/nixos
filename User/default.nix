@@ -584,76 +584,134 @@ in
     };
     desktopEntries =
       let
-        appId = "${my.user.id}.WebApp";
-        browserBin = "${pkgs.vivaldi}/bin/vivaldi";
-        EntryShared = {
+        pwa = {
+          fb = {
+            name = "Facebook";
+            id = "kippjfofjhjlffjecoapiogbkgbpmgej";
+          };
+          gh = {
+            name = "GitHub";
+            id = "mjoklplbddabcmpepnokjaffbmgbkkgg";
+          };
+          ig = {
+            name = "Instagram";
+            id = "akpamiohjfcnimfljfndmaldlcfphjmp";
+          };
+          wa = {
+            name = "WhatsApp";
+            id = "hnpfjngllnobngcgfapefoaidbinmjnm";
+          };
+          yt = {
+            name = "YouTube";
+            id = "agimnkijcaahngcdmfeangaknmldooml";
+          };
+        };
+        cmd = "${pkgs.vivaldi}/bin/vivaldi --profile-directory=Default";
+        shared = {
           type = "Application";
           prefersNonDefaultGPU = true;
           settings = {
             OnlyShowIn = "COSMIC";
             SingleMainWindow = "true";
+            Version = "1.0";
           };
         };
       in
       {
-        "${appId}.GitHub" = {
-          name = "GitHub";
-          genericName = "GitHub";
-          comment = "GitHub is where people build software";
-          exec = "${browserBin} --app=https://github.com";
-          icon = "${appId}.GitHub";
+        "${my.user.rdns}-${pwa.fb.id}-${pwa.fb.name}" = rec {
+          name = pwa.fb.name;
+          genericName = name;
+          comment = "${name} helps you connect and share with the people in your life.";
+          icon = name;
+          exec = "${cmd} --app-id=${pwa.fb.id}";
+          categories = [ "Network" ];
+          settings = {
+            Keywords = "social;media;facebook;photos";
+            StartupWMClass = "crx_${pwa.fb.id}";
+          };
+          terminal = false;
+        }
+        // shared;
+        "${my.user.rdns}-${pwa.gh.id}-${pwa.gh.name}" = rec {
+          name = pwa.gh.name;
+          genericName = name;
+          comment = "${name} is where people build software";
+          icon = name;
+          exec = "${cmd} --app-id=${pwa.gh.id}";
           categories = [ "Development" ];
           settings = {
             Keywords = "development;git;github";
-            StartupWMClass = "github.com";
+            StartupWMClass = "crx_${pwa.gh.id}";
           };
+          terminal = false;
         }
-        // EntryShared;
-        "${appId}.Instagram" = {
-          name = "Instagram";
-          genericName = "Instagram";
+        // shared;
+        "${my.user.rdns}-${pwa.ig.id}-${pwa.ig.name}" = rec {
+          name = pwa.ig.name;
+          genericName = name;
           comment = "Share what you're into with the people who get you";
-          exec = "${browserBin} --app=https://instagram.com";
-          icon = "${appId}.Instagram";
+          icon = name;
+          exec = "${cmd} --app-id=${pwa.ig.id}";
           categories = [ "Network" ];
           settings = {
             Keywords = "social;media;instagram;photos";
-            StartupWMClass = "instagram.com";
+            StartupWMClass = "crx_${pwa.ig.id}";
           };
+          terminal = false;
         }
-        // EntryShared;
-        "${appId}.WhatsApp" = {
-          name = "WhatsApp";
-          genericName = "WhatsApp Web";
+        // shared;
+        "${my.user.rdns}-${pwa.wa.id}-${pwa.wa.name}" = rec {
+          name = pwa.wa.name;
+          genericName = "${name} Web";
           comment = "Secure and Reliable Free Private Messaging and Calling";
-          exec = "${browserBin} --app=https://web.whatsapp.com";
-          icon = "${appId}.WhatsApp";
+          icon = name;
+          exec = "${cmd} --app-id=${pwa.wa.id}";
           categories = [
             "Network"
             "InstantMessaging"
           ];
           settings = {
             Keywords = "chat;messaging;whatsapp;communication";
-            StartupWMClass = "web.whatsapp.com";
+            StartupWMClass = "crx_${pwa.wa.id}";
           };
+          terminal = false;
         }
-        // EntryShared;
-        "${appId}.YouTube" = {
-          name = "YouTube";
-          genericName = "YouTube";
+        // shared;
+        "${my.user.rdns}-${pwa.yt.id}-${pwa.yt.name}" = rec {
+          name = pwa.yt.name;
+          genericName = name;
           comment = "Share your videos with friends, family, and the world";
-          exec = "${browserBin} --app=https://youtube.com";
-          icon = "${appId}.YouTube";
+          icon = name;
+          exec = "${cmd} --app-id=${pwa.yt.id}";
+          actions = {
+            exp = {
+              name = "Explore";
+              icon = pwa.yt.name;
+              exec = ''
+                ${cmd} --app-id=${pwa.yt.id} \
+                "--app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/explore?feature=app_shortcuts"
+              '';
+            };
+            sub = {
+              name = "Subscriptions";
+              icon = pwa.yt.name;
+              exec = ''
+                ${cmd} --app-id=${pwa.yt.id} \
+                "--app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/subscriptions?feature=app_shortcuts"
+              '';
+            };
+          };
           categories = [
             "Network"
             "AudioVideo"
           ];
           settings = {
             Keywords = "video;streaming;youtube;media";
-            StartupWMClass = "youtube.com";
+            StartupWMClass = "crx_${pwa.yt.id}";
           };
+          terminal = false;
         }
-        // EntryShared;
+        // shared;
       };
     userDirs = {
       enable = true;

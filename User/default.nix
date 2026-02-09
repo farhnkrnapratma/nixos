@@ -687,12 +687,12 @@ in
             exp = {
               name = "Explore";
               icon = pwa.yt.name;
-              exec = "${cmd} --app-id=${pwa.yt.id} --app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/explore?feature=app_shortcuts";
+              exec = ''${cmd} --app-id=${pwa.yt.id} "--app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/explore?feature=app_shortcuts"'';
             };
             sub = {
               name = "Subscriptions";
               icon = pwa.yt.name;
-              exec = "${cmd} --app-id=${pwa.yt.id} --app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/subscriptions?feature=app_shortcuts";
+              exec = ''${cmd} --app-id=${pwa.yt.id} "--app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/subscriptions?feature=app_shortcuts"'';
             };
           };
           categories = [ "AudioVideo" ];
@@ -703,21 +703,21 @@ in
           terminal = false;
         }
         // shared;
+        userDirs = {
+          enable = true;
+          createDirectories = true;
+          desktop = null;
+          documents = "${my.path.home}/Documents";
+          download = "${my.path.home}/Downloads";
+          music = null;
+          pictures = "${my.path.home}/Pictures";
+          publicShare = null;
+          templates = null;
+          videos = null;
+          extraConfig = {
+            XDG_PROJECTS_DIR = my.path.projects;
+          };
+        };
       };
-    userDirs = {
-      enable = true;
-      createDirectories = true;
-      desktop = null;
-      documents = "${my.path.home}/Documents";
-      download = "${my.path.home}/Downloads";
-      music = null;
-      pictures = "${my.path.home}/Pictures";
-      publicShare = null;
-      templates = null;
-      videos = null;
-      extraConfig = {
-        XDG_PROJECTS_DIR = my.path.projects;
-      };
-    };
   };
 }

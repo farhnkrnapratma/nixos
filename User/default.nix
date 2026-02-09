@@ -687,24 +687,15 @@ in
             exp = {
               name = "Explore";
               icon = pwa.yt.name;
-              exec = ''
-                ${cmd} --app-id=${pwa.yt.id} \
-                "--app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/explore?feature=app_shortcuts"
-              '';
+              exec = "${cmd} --app-id=${pwa.yt.id} --app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/explore?feature=app_shortcuts";
             };
             sub = {
               name = "Subscriptions";
               icon = pwa.yt.name;
-              exec = ''
-                ${cmd} --app-id=${pwa.yt.id} \
-                "--app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/subscriptions?feature=app_shortcuts"
-              '';
+              exec = "${cmd} --app-id=${pwa.yt.id} --app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/subscriptions?feature=app_shortcuts";
             };
           };
-          categories = [
-            "Network"
-            "AudioVideo"
-          ];
+          categories = [ "AudioVideo" ];
           settings = {
             Keywords = "video;streaming;youtube;media";
             StartupWMClass = "crx_${pwa.yt.id}";

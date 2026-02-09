@@ -271,7 +271,7 @@ in
 
           if test "$flakes_updated" = true
             echo "[4/7] Pushing changes to remote repository..."
-            if not commit "root: updated flake lock file"
+            if not commit "root: update the `flake.lock` file"
               echo "[!] Failed at step 4/7"
               cd $orig_dir 2>/dev/null
               return 1

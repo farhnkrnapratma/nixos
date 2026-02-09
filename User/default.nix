@@ -703,21 +703,21 @@ in
           terminal = false;
         }
         // shared;
-        userDirs = {
-          enable = true;
-          createDirectories = true;
-          desktop = null;
-          documents = "${my.path.home}/Documents";
-          download = "${my.path.home}/Downloads";
-          music = null;
-          pictures = "${my.path.home}/Pictures";
-          publicShare = null;
-          templates = null;
-          videos = null;
-          extraConfig = {
-            XDG_PROJECTS_DIR = my.path.projects;
-          };
-        };
       };
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      desktop = null;
+      documents = "${my.path.home}/Documents";
+      download = "${my.path.home}/Downloads";
+      music = null;
+      pictures = "${my.path.home}/Pictures";
+      publicShare = null;
+      templates = null;
+      videos = null;
+      extraConfig = {
+        XDG_PROJECTS_DIR = my.path.projects;
+      };
+    };
   };
 }

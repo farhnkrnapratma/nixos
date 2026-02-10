@@ -51,6 +51,7 @@ in
       # CLI
       codeberg-cli
       codex
+      cowsay
       gemini-cli
       github-copilot-cli
       glab

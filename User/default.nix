@@ -142,31 +142,6 @@ in
       interactiveShellInit = ''
         set fish_greeting
 
-        function fish_right_prompt
-          set -l duration $CMD_DURATION
-          set -l parts
-
-          if test -n "$duration" -a "$duration" -gt 1000
-            if test $duration -gt 60000
-              set -a parts (set_color --bold --background 1c1c1c d7af5f)(math -s1 $duration / 60000)"m"
-            else
-              set -a parts (set_color --bold --background 1c1c1c d7af5f)(math -s1 $duration / 1000)"s"
-            end
-          else if test -n "$duration"
-            set -a parts (set_color --bold --background 1c1c1c 2e8b57)$duration"ms"
-          else
-            set -a parts (set_color --bold --background 1c1c1c ffffff)"0ms"
-          end
-
-          set -a parts (set_color --bold --background 1c1c1c 5f87d7)(date +"%a %d %b")
-          set -a parts (set_color --bold --background 1c1c1c 5fd7d7)(date +"%H:%M:%S")
-
-          set -l sep (set_color --bold --background 1c1c1c ffffff)
-          set -l normal (set_color normal)
-
-          echo -n $sep"❰"(string join $sep"❙" $parts)$sep"❱ "$normal
-        end
-
         function shell
           set -l cmd --command fish --interactive --private
 

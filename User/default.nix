@@ -164,6 +164,17 @@ in
           end
         end
 
+        function devel
+          set -l cmd -c fish -iP
+
+          if not test -f "flake.nix"
+            echo "[!] No 'flake.nix' file found in the working directory"
+            return 1
+          else
+            nix develop $cmd
+          end
+        end
+
         function commit
           if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
             echo "[!] Not in a git repository"

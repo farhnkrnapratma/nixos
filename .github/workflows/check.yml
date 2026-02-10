@@ -30,7 +30,7 @@ jobs:
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: auto-format code [skip ci]"
+          commit_message: "github(workflows): auto-format code [skip ci]"
           commit_user_name: github-actions[bot]
           commit_user_email: github-actions[bot]@users.noreply.github.com
 
@@ -38,4 +38,4 @@ jobs:
         run: nix flake check
 
       - name: Build NixOS configuration
-        run: nix build .#nixosConfigurations.dotdev.config.system.build.toplevel
+        run: nix build .#nixosConfigurations.dev.config.system.build.toplevel

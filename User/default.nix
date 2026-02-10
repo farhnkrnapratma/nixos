@@ -225,65 +225,57 @@ in
         end
 
         function update
-          set -l orig_dir (pwd)
-          set -l flakes_updated false
+          set -l cwd (pwd)
+          set -l update false
 
-          echo "[1/7] Change directory to flake repository..."
+          echo "[1/6] Change directory to flake repository..."
           if not cd ${my.path.flake}
-            echo "[!] Failed at step 1/7"
+            echo "[!] Failed at step 1/6"
             return 1
           end
-          echo "[1/7] Done."
+          echo "[1/6] Done."
 
-          echo "[2/7] Updating flakes..."
+          echo "[2/6] Updating flakes..."
           if not nix flake update
-            echo "[!] Failed at step 2/7"
-            cd $orig_dir 2>/dev/null
+            echo "[!] Failed at step 2/6"
+            cd $cwd 2>/dev/null
             return 1
           end
-          git diff --quiet -- flake.lock; or set flakes_updated true
-          test "$flakes_updated" = false; and echo "[!] No flakes updates available"
-          echo "[2/7] Done."
+          git diff --quiet -- flake.lock; or set update true
+          test "$update" = false; and echo "[!] No flakes updates available"
+          echo "[2/6] Done."
 
-          echo "[3/7] Formatting repository..."
-          if not nix fmt
-            echo "[!] Failed at step 3/7"
-            cd $orig_dir 2>/dev/null
-            return 1
-          end
-          echo "[3/7] Done."
-
-          if test "$flakes_updated" = true
-            echo "[4/7] Pushing changes to remote repository..."
+          if test "$update" = true
+            echo "[3/6] Pushing changes to remote repository..."
             if not commit "root: update the `flake.lock` file"
-              echo "[!] Failed at step 4/7"
-              cd $orig_dir 2>/dev/null
+              echo "[!] Failed at step 3/6"
+              cd $cwd 2>/dev/null
               return 1
             end
-            echo "[4/7] Done."
+            echo "[3/6] Done."
 
-            echo "[5/7] Rebuilding host system..."
+            echo "[4/6] Rebuilding host system..."
             if not sudo nixos-rebuild switch --flake ${my.path.flake}
-              echo "[!] Failed at step 5/7"
-              cd $orig_dir 2>/dev/null
+              echo "[!] Failed at step 4/6"
+              cd $cwd 2>/dev/null
               return 1
             end
-            echo "[5/7] Done."
+            echo "[4/6] Done."
 
-            echo "[6/7] Deleting older generations..."
+            echo "[5/6] Deleting older generations..."
             if not sudo nix-collect-garbage -d
-              echo "[!] Failed at step 6/7"
-              cd $orig_dir 2>/dev/null
+              echo "[!] Failed at step 5/6"
+              cd $cwd 2>/dev/null
               return 1
             end
-            echo "[6/7] Done."
+            echo "[5/6] Done."
           else
-            echo "[!] Skipping step [4-6]... Done."
+            echo "[!] Skipping step [3-5]... Done."
           end
 
-          echo "[7/7] Back to last directory..."
-          cd $orig_dir
-          echo "[7/7] Done."
+          echo "[6/6] Back to last directory..."
+          cd $cwd
+          echo "[6/6] Done."
         end
       '';
       preferAbbrs = true;

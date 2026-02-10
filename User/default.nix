@@ -140,7 +140,15 @@ in
       enable = true;
       generateCompletions = true;
       interactiveShellInit = ''
-        set fish_greeting
+        function fish_greeting
+          printf "I'm running:\n - %s %s\n - %s %s\n in %s\n" \
+          (uname -s) \
+          (uname -r | cut -d'-' -f1) \
+          (basename $SHELL | sed 's/.*/\u&/') \
+          (fish --version | string match -r '[\d.]+' | head -n1) \
+          (awk -F'"' '/PRETTY_NAME/{print $2}' /etc/os-release | cut -d' ' -f1-2) \
+          | cowsay
+        end
 
         function shell
           set -l cmd -c fish -iP

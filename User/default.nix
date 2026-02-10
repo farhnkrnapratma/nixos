@@ -288,7 +288,6 @@ in
       preferAbbrs = true;
       shellAbbrs = {
         c = "clear";
-        cat = "bat";
         l = "eza -lahgmuU --smart-group";
         ls = "eza";
         nfc = "nix flake check";

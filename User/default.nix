@@ -143,7 +143,7 @@ in
         set fish_greeting
 
         function shell
-          set -l cmd --command fish --interactive --private
+          set -l cmd -c fish -iP
 
           if test -f "flake.nix"
             nix shell $cmd

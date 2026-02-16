@@ -397,6 +397,7 @@ in
 
     gpg = {
       enable = true;
+      homedir = "${my.path.home}/.gnupg";
       publicKeys = [
         {
           text = ''
@@ -442,6 +443,10 @@ in
           trust = "ultimate";
         }
       ];
+      settings = {
+        use-agent = true;
+        pinentry-mode = "ask";
+      };
     };
 
     vscode = {
@@ -553,11 +558,21 @@ in
     };
   };
 
-  services.gpg-agent = lib.mkIf gpg_enabled {
+  services.gpg-agent = lib.mkIf gpg_enabled rec {
     enable = true;
     enableFishIntegration = lib.mkIf fish_enabled true;
+    enableSshSupport = true;
+    defaultCacheTtl = 3600;
+    defaultCacheTtlSsh = defaultCacheTtl;
+    extraConfig = ''
+      allow-loopback-pinentry
+    '';
+    grabKeyboardAndMouse = false;
+    maxCacheTtl = 7200;
+    maxCacheTtlSsh = maxCacheTtl;
     noAllowExternalCache = true;
-    pinentry.package = pkgs.pinentry-all;
+    pinentry.package = pkgs.pinentry-curses;
+    verbose = true;
   };
 
   xdg = {

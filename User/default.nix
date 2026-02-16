@@ -152,16 +152,22 @@ in
           | cowsay
         end
 
+        function fish_right_prompt
+          if set -q NIX_SHELL
+            echo (set_color normal)"("(set_color blue)"󱄅 "(set_color cyan)$NIX_SHELL(set_color normal)")"
+          end
+        end
+
         function shell
           set -l cmd -c fish -iP
 
           if test -f "flake.nix"
-            nix shell $cmd
+            env NIX_SHELL="shell" nix shell $cmd
           else if test (count $argv) -eq 0
             echo "[!] No packages specified and no 'flake.nix' file found in the working directory"
             return 1
           else
-            nix shell $argv $cmd
+            env NIX_SHELL="shell" nix shell $argv $cmd
           end
         end
 
@@ -172,7 +178,7 @@ in
             echo "[!] No 'flake.nix' file found in the working directory"
             return 1
           else
-            nix develop $cmd
+            env NIX_SHELL="develop" nix develop $cmd
           end
         end
 

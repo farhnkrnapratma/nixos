@@ -207,6 +207,23 @@ in
       gnome-keyring.enable = true;
       sushi.enable = true;
     };
+    openssh = {
+      enable = true;
+      banner = ''
+        Hey, there!
+
+        You're going to access this machine: ${my.user.rdns}
+        Timestamp: ${toString builtins.currentTime}
+      '';
+      knownHosts.termux.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama";
+      settings = {
+        KbdInteractiveAuthentication = false;
+        LogLevel = "VERBOSE";
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
+      startWhenNeeded = true;
+    };
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -281,6 +298,7 @@ in
         isNormalUser = true;
         shell = pkgs.fish;
         uid = my.user.guid;
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama" ];
       };
       root.initialHashedPassword = "!";
     };

@@ -46,8 +46,8 @@ in
       resources
       seahorse
       snapshot
+      telegram-desktop
       vivaldi
-      vivaldi-ffmpeg-codecs
       # CLI
       codeberg-cli
       codex
@@ -61,6 +61,7 @@ in
       tea
       wl-clipboard
       # Misc
+      vivaldi-ffmpeg-codecs
       gnome-keyring
       libgnome-keyring
       yaru-theme

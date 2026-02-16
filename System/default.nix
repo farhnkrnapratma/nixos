@@ -300,7 +300,9 @@ in
         isNormalUser = true;
         shell = pkgs.fish;
         uid = env.user.guid;
-        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama" ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama"
+        ];
       };
       root.initialHashedPassword = "!";
     };

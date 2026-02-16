@@ -212,7 +212,8 @@ in
       banner = ''
         Hey, there!
 
-        You're going to access this machine: ${my.user.rdns}
+        You're going to access
+        this machine: ${my.user.name}@${my.user.host}
       '';
       knownHosts.termux.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama";
       settings = {

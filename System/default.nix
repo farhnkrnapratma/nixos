@@ -211,9 +211,11 @@ in
       enable = true;
       banner = ''
         Hey, there!
-
         You're going to access
         this machine: ${env.user.name}@${env.user.host}
+        Warning: Only authorized keys
+                 can access this machine!
+        That's what the cowsay.
       '';
       knownHosts.termux.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama";
       settings = {

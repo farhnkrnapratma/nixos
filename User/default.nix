@@ -329,7 +329,7 @@ in
     ghostty = {
       enable = true;
       clearDefaultKeybinds = false;
-      enableFishIntegration = lib.mkIf fish_enabled true;
+      enableFishIntegration = fish_enabled;
       installBatSyntax = true;
       settings = {
         adjust-cell-height = "15%";
@@ -560,7 +560,7 @@ in
 
   services.gpg-agent = lib.mkIf gpg_enabled rec {
     enable = true;
-    enableFishIntegration = lib.mkIf fish_enabled true;
+    enableFishIntegration = fish_enabled;
     enableSshSupport = true;
     defaultCacheTtl = 3600;
     defaultCacheTtlSsh = defaultCacheTtl;

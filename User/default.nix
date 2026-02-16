@@ -5,7 +5,7 @@
   ...
 }:
 let
-  my = import ../Shared;
+  env = import ../Shared;
   profile_directory = config.home.profileDirectory;
   fish_enabled = config.programs.fish.enable;
   gpg_enabled = config.programs.gpg.enable;
@@ -26,11 +26,11 @@ in
   };
 
   home = {
-    uid = my.user.guid;
-    username = my.user.name;
+    uid = env.user.guid;
+    username = env.user.name;
     enableNixpkgsReleaseCheck = true;
-    homeDirectory = my.path.home;
-    stateVersion = my.tag;
+    homeDirectory = env.path.home;
+    stateVersion = env.tag;
     packages = with pkgs; [
       # GUI
       discord
@@ -67,7 +67,7 @@ in
       yaru-theme
     ];
     sessionVariables = rec {
-      VISUAL = my.user.edit;
+      VISUAL = env.user.edit;
       EDITOR = VISUAL;
     };
     shell = {
@@ -241,7 +241,7 @@ in
           set -l update false
 
           echo "[1/6] Change directory to flake repository..."
-          if not cd ${my.path.flake}
+          if not cd ${env.path.flake}
             echo "[!] Failed at step 1/6"
             return 1
           end
@@ -267,7 +267,7 @@ in
             echo "[3/6] Done."
 
             echo "[4/6] Rebuilding host system..."
-            if not sudo nixos-rebuild switch --flake ${my.path.flake}
+            if not sudo nixos-rebuild switch --flake ${env.path.flake}
               echo "[!] Failed at step 4/6"
               cd $cwd 2>/dev/null
               return 1
@@ -297,9 +297,9 @@ in
         ls = "eza";
         nfc = "nix flake check";
         nft = "nix fmt";
-        nfu = "nix flake update --flake ${my.path.flake}";
+        nfu = "nix flake update --flake ${env.path.flake}";
         ngc = "sudo nix-collect-garbage -d";
-        nrs = "sudo nixos-rebuild switch --flake ${my.path.flake}";
+        nrs = "sudo nixos-rebuild switch --flake ${env.path.flake}";
         x = "exit";
       };
     };
@@ -310,18 +310,18 @@ in
         enable = true;
         hosts = [ "https://github.com" ];
       };
-      hosts."github.com".user = my.user.name;
+      hosts."github.com".user = env.user.name;
       settings = {
         aliases = {
           clone = "repo clone";
           delete = "repo delete --yes";
           login = "auth login -cwh github.com -p https --skip-ssh-key";
-          logout = "auth logout -h github.com -u ${my.user.name}";
+          logout = "auth logout -h github.com -u ${env.user.name}";
           ls = "repo ls";
           refresh = "auth refresh -ch github.com";
           sync = "repo sync";
         };
-        editor = my.user.edit;
+        editor = env.user.edit;
         git_protocol = "https";
       };
     };
@@ -367,8 +367,8 @@ in
       maintenance = {
         enable = true;
         repositories = [
-          "${my.path.projects}/cache"
-          "${my.path.flake}"
+          "${env.path.projects}/cache"
+          "${env.path.flake}"
         ];
         timers = {
           daily = "daily";
@@ -378,13 +378,13 @@ in
       };
       settings = {
         core = {
-          editor = my.user.edit;
+          editor = env.user.edit;
           whitespace = "trailing-space,space-before-tab";
         };
         init.defaultBranch = "main";
         user = {
-          email = "${my.user.name}@gmail.com";
-          name = my.user.desc;
+          email = "${env.user.name}@gmail.com";
+          name = env.user.desc;
         };
       };
       signing = lib.mkIf gpg_enabled {
@@ -397,7 +397,7 @@ in
 
     gpg = {
       enable = true;
-      homedir = "${my.path.home}/.gnupg";
+      homedir = "${env.path.home}/.gnupg";
       publicKeys = [
         {
           text = ''
@@ -620,7 +620,7 @@ in
         };
       in
       {
-        "${my.user.rdns}-${pwa.fb.id}-${pwa.fb.name}" = rec {
+        "${env.user.rdns}-${pwa.fb.id}-${pwa.fb.name}" = rec {
           name = pwa.fb.name;
           genericName = name;
           comment = "${name} helps you connect and share with the people in your life.";
@@ -634,7 +634,7 @@ in
           terminal = false;
         }
         // shared;
-        "${my.user.rdns}-${pwa.gh.id}-${pwa.gh.name}" = rec {
+        "${env.user.rdns}-${pwa.gh.id}-${pwa.gh.name}" = rec {
           name = pwa.gh.name;
           genericName = name;
           comment = "${name} is where people build software";
@@ -648,7 +648,7 @@ in
           terminal = false;
         }
         // shared;
-        "${my.user.rdns}-${pwa.ig.id}-${pwa.ig.name}" = rec {
+        "${env.user.rdns}-${pwa.ig.id}-${pwa.ig.name}" = rec {
           name = pwa.ig.name;
           genericName = name;
           comment = "Share what you're into with the people who get you";
@@ -662,7 +662,7 @@ in
           terminal = false;
         }
         // shared;
-        "${my.user.rdns}-${pwa.wa.id}-${pwa.wa.name}" = rec {
+        "${env.user.rdns}-${pwa.wa.id}-${pwa.wa.name}" = rec {
           name = pwa.wa.name;
           genericName = "${name} Web";
           comment = "Secure and Reliable Free Private Messaging and Calling";
@@ -679,7 +679,7 @@ in
           terminal = false;
         }
         // shared;
-        "${my.user.rdns}-${pwa.yt.id}-${pwa.yt.name}" = rec {
+        "${env.user.rdns}-${pwa.yt.id}-${pwa.yt.name}" = rec {
           name = pwa.yt.name;
           genericName = name;
           comment = "Share your videos with friends, family, and the world";
@@ -710,15 +710,15 @@ in
       enable = true;
       createDirectories = true;
       desktop = null;
-      documents = "${my.path.home}/Documents";
-      download = "${my.path.home}/Downloads";
+      documents = "${env.path.home}/Documents";
+      download = "${env.path.home}/Downloads";
       music = null;
-      pictures = "${my.path.home}/Pictures";
+      pictures = "${env.path.home}/Pictures";
       publicShare = null;
       templates = null;
       videos = null;
       extraConfig = {
-        XDG_PROJECTS_DIR = my.path.projects;
+        XDG_PROJECTS_DIR = env.path.projects;
       };
     };
   };

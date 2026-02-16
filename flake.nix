@@ -20,8 +20,8 @@
       ...
     }@inputs:
     let
-      my = import ./Shared;
-      pkgs = nixpkgs.legacyPackages.${my.aos};
+      env = import ./Shared;
+      pkgs = nixpkgs.legacyPackages.${env.aos};
       treefmtEval = treefmt-nix.lib.evalModule pkgs {
         projectRootFile = "flake.nix";
         programs = {
@@ -31,10 +31,10 @@
       };
     in
     {
-      checks.${my.aos}.formatting = treefmtEval.config.build.check self;
-      formatter.${my.aos} = treefmtEval.config.build.wrapper;
-      nixosConfigurations.${my.user.host} = nixpkgs.lib.nixosSystem {
-        system = my.aos;
+      checks.${env.aos}.formatting = treefmtEval.config.build.check self;
+      formatter.${env.aos} = treefmtEval.config.build.wrapper;
+      nixosConfigurations.${env.user.host} = nixpkgs.lib.nixosSystem {
+        system = env.aos;
         specialArgs = { inherit inputs; };
         modules = [ ./System ];
       };

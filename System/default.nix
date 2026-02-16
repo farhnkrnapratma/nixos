@@ -5,7 +5,7 @@
   ...
 }:
 let
-  my = import ../Shared;
+  env = import ../Shared;
 in
 {
   imports = [
@@ -73,7 +73,7 @@ in
   fileSystems = {
     "/boot" = {
       autoFormat = true;
-      device = my.part.boot;
+      device = env.part.boot;
       fsType = "vfat";
       mountPoint = "/boot";
       options = [
@@ -85,11 +85,11 @@ in
       ];
     };
     "/" = {
-      device = my.part.mapper;
+      device = env.part.mapper;
       encrypted = {
         enable = true;
-        blkDev = my.part.root;
-        label = my.part.luks;
+        blkDev = env.part.root;
+        label = env.part.luks;
       };
       fsType = "ext4";
       options = [
@@ -108,7 +108,7 @@ in
     backupFileExtension = "bak";
     overwriteBackup = true;
     useGlobalPkgs = true;
-    users.${my.user.name} = import ../User;
+    users.${env.user.name} = import ../User;
     useUserPackages = true;
     verbose = true;
   };
@@ -138,7 +138,7 @@ in
       pingLimit = "1/minute burst 3 packets";
       rejectPackets = true;
     };
-    hostName = my.user.host;
+    hostName = env.user.host;
     networkmanager = {
       enable = true;
       dhcp = "internal";
@@ -213,7 +213,7 @@ in
         Hey, there!
 
         You're going to access
-        this machine: ${my.user.name}@${my.user.host}
+        this machine: ${env.user.name}@${env.user.host}
       '';
       knownHosts.termux.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama";
       settings = {
@@ -258,7 +258,7 @@ in
       allowReboot = true;
       dates = "daily";
       fixedRandomDelay = true;
-      flake = my.path.flake;
+      flake = env.path.flake;
       operation = "switch";
       randomizedDelaySec = "10min";
       rebootWindow = {
@@ -275,15 +275,15 @@ in
 
   users = {
     mutableUsers = false;
-    groups.${my.user.name} = rec {
-      gid = my.user.guid;
+    groups.${env.user.name} = rec {
+      gid = env.user.guid;
       members = [ name ];
-      name = my.user.name;
+      name = env.user.name;
     };
     users = {
-      ${my.user.name} = {
+      ${env.user.name} = {
         createHome = true;
-        description = my.user.desc;
+        description = env.user.desc;
         expires = "2036-01-01";
         extraGroups = [
           "audio"
@@ -291,13 +291,13 @@ in
           "video"
           "wheel"
         ];
-        group = my.user.name;
+        group = env.user.name;
         homeMode = "0700";
         ignoreShellProgramCheck = true;
         initialHashedPassword = "$6$ASMi1cF9jL1HgY/X$dnUd2rGPXGB77FGry8odE/gTXOD62dZDiwfnB2/YTpjasF4c9VRD/5YoQiFhflwO0yn.XmxOTueLQAmCFgMfc.";
         isNormalUser = true;
         shell = pkgs.fish;
-        uid = my.user.guid;
+        uid = env.user.guid;
         openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama" ];
       };
       root.initialHashedPassword = "!";

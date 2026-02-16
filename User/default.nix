@@ -403,7 +403,6 @@ in
 
     gpg = {
       enable = true;
-      homedir = "${env.path.home}/.gnupg";
       publicKeys = [
         {
           text = ''

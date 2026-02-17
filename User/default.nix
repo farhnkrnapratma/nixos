@@ -342,7 +342,7 @@ in
         background-opacity = 1;
         cursor-style = "underline";
         cursor-style-blink = true;
-        font-family = "Adwaita Mono";
+        font-family = "JetBrains Mono";
         font-feature = "+calt, +liga, +dlig";
         font-size = 11;
         link-previews = true;
@@ -483,7 +483,7 @@ in
             cursorBlinking = "smooth";
             cursorSmoothCaretAnimation = "on";
             cursorStyle = "underline";
-            fontFamily = "'Adwaita Mono', monospace";
+            fontFamily = "'JetBrains Mono', monospace";
             fontLigatures = true;
             fontSize = 14;
             inertialScroll = true;
@@ -535,7 +535,7 @@ in
             cursorStyleInactive = "line";
             defaultProfile.linux = "fish";
             enableImages = true;
-            fontFamily = "'AdwaitaMono Nerd Font', monospace";
+            fontFamily = "'JetBrains Mono', monospace";
             fontLigatures.enabled = true;
             gpuAcceleration = "on";
             smoothScrolling = true;

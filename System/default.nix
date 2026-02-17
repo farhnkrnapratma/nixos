@@ -58,15 +58,15 @@ in
   fonts = {
     fontconfig = {
       defaultFonts = {
-        monospace = [ "AdwaitaMono Nerd Font" ];
-        sansSerif = [ "Adwaita Sans" ];
-        serif = [ "Liberation Serif" ];
+        monospace = [ "JetBrains Mono" ];
+        sansSerif = [ "Noto Sans" ];
+        serif = [ "Noto Serif" ];
       };
     };
     packages = with pkgs; [
-      adwaita-fonts
+      jetbrains-mono
       noto-fonts-cjk-sans
-      nerd-fonts.adwaita-mono
+      nerd-fonts.symbols-only
     ];
   };
 

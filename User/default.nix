@@ -348,7 +348,7 @@ in
         link-previews = true;
         shell-integration = if fish_enabled then "fish" else "detect";
         shell-integration-features = "no-cursor";
-        theme = "dark:Adwaita Dark,light:Adwaita";
+        theme = "dark:Gruvbox Dark,light:Gruvbox Light";
         window-decoration = "none";
         window-padding-balance = true;
         window-padding-x = 3;
@@ -465,9 +465,9 @@ in
           bierner.github-markdown-preview
           bmalehorn.vscode-fish
           editorconfig.editorconfig
-          egirlcatnip.adwaita-github-theme
           github.vscode-github-actions
           github.vscode-pull-request-github
+          jdinhlife.gruvbox
           jnoortheen.nix-ide
           mads-hartmann.bash-ide-vscode
           ms-python.python

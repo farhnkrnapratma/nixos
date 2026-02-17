@@ -542,7 +542,7 @@ in
           };
           update.showReleaseNotes = false;
           window.autoDetectColorScheme = true;
-          workbench = rec {
+          workbench = {
             editor.showTabIndex = true;
             externalBrowser = "${profile_directory}/bin/brave";
             iconTheme = "material-icon-theme";

@@ -543,12 +543,11 @@ in
           update.showReleaseNotes = false;
           window.autoDetectColorScheme = true;
           workbench = rec {
-            colorTheme = "Adwaita Dark & Github syntax highlighting";
             editor.showTabIndex = true;
             externalBrowser = "${profile_directory}/bin/brave";
             iconTheme = "material-icon-theme";
-            preferredDarkColorTheme = colorTheme;
-            preferredLightColorTheme = "Adwaita Light & Github syntax highlighting";
+            preferredDarkColorTheme = "Gruvbox Dark Medium";
+            preferredLightColorTheme = "Gruvbox Light Medium";
             startupEditor = "none";
             tips.enabled = false;
             tree.renderIndentGuides = "always";

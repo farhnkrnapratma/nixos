@@ -345,7 +345,7 @@ in
         background-opacity = 1;
         cursor-style = "underline";
         cursor-style-blink = true;
-        font-family = "JetBrains Mono";
+        font-family = "JetBrainsMono Nerd Font";
         font-feature = "+calt, +liga, +dlig";
         font-size = 11;
         link-previews = true;
@@ -486,7 +486,7 @@ in
             cursorBlinking = "smooth";
             cursorSmoothCaretAnimation = "on";
             cursorStyle = "underline";
-            fontFamily = "'JetBrains Mono', monospace";
+            fontFamily = "'JetBrainsMono Nerd Font', monospace";
             fontLigatures = true;
             fontSize = 14;
             inertialScroll = true;
@@ -538,7 +538,7 @@ in
             cursorStyleInactive = "line";
             defaultProfile.linux = "fish";
             enableImages = true;
-            fontFamily = "'JetBrains Mono', monospace";
+            fontFamily = "'JetBrainsMono Nerd Font', monospace";
             fontLigatures.enabled = true;
             gpuAcceleration = "on";
             smoothScrolling = true;

@@ -56,12 +56,10 @@ in
   };
 
   fonts = {
-    fontconfig = {
-      defaultFonts = {
-        monospace = [ "JetBrains Mono" ];
-        sansSerif = [ "Noto Sans" ];
-        serif = [ "Noto Serif" ];
-      };
+    fontconfig.defaultFonts = {
+      monospace = [ "Noto Sans Mono" ];
+      sansSerif = [ "Noto Sans" ];
+      serif = [ "Noto Serif" ];
     };
     packages = with pkgs; [
       noto-fonts-cjk-sans

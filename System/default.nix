@@ -64,9 +64,8 @@ in
       };
     };
     packages = with pkgs; [
-      jetbrains-mono
       noto-fonts-cjk-sans
-      nerd-fonts.symbols-only
+      nerd-fonts.jetbrains-mono
     ];
   };
 

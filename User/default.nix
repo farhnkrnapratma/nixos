@@ -199,11 +199,11 @@ in
 
           test -n "$mode"; or set mode a
 
-          echo "[1/3] Adding change(s) to the staging area..."
+          echo "[1/3] Staging changes..."
           switch $mode
             case a
               if not git add -A
-                echo "[!] Failed at step 1/3"
+                echo "[!] Failed at [1/3]"
                 return 1
               end
             case f
@@ -213,87 +213,90 @@ in
               end
               for f in $files
                 if not test -e "$f"
-                  echo "[!] File not found: $f"
+                  echo "[!] File not found: '$f'"
                   return 1
                 end
               end
               if not git add $files
-                echo "[!] Failed at step 1/3"
+                echo "[!] Failed at [1/3]"
                 return 1
               end
             case '*'
               echo "[!] Invalid mode: $mode"
               return 1
           end
-          echo "[1/3] Done."
+          echo "[1/3] Done"
 
           echo "[2/3] Committing staged changes..."
           if not git commit -s -m "$cmsg"
-            echo "[!] Failed at step 2/3"
+            echo "[!] Failed at [2/3]"
             return 1
           end
-          echo "[2/3] Done."
+          echo "[2/3] Done"
 
           echo "[3/3] Pushing commits..."
           if not git push
-            echo "[!] Failed at step 3/3"
+            echo "[!] Failed at [3/3]"
             return 1
           end
-          echo "[3/3] Done."
+          echo "[3/3] Done"
         end
 
         function update
           set -l cwd (pwd)
           set -l update false
 
-          echo "[1/6] Change directory to flake repository..."
+          echo "[1/6] cd '$cwd' -> '${env.path.flake}'"
           if not cd ${env.path.flake}
-            echo "[!] Failed at step 1/6"
+            echo "[!] Failed at [1/6]"
             return 1
           end
-          echo "[1/6] Done."
+          echo "[1/6] Done"
 
           echo "[2/6] Updating flakes..."
           if not nix flake update
-            echo "[!] Failed at step 2/6"
+            echo "[!] Failed at [2/6]"
             cd $cwd 2>/dev/null
             return 1
           end
           git diff --quiet -- flake.lock; or set update true
-          test "$update" = false; and echo "[!] No flakes updates available"
-          echo "[2/6] Done."
+          test "$update" = false; and echo "[!] No flakes update available"
+          echo "[2/6] Done"
 
           if test "$update" = true
             echo "[3/6] Pushing changes to remote repository..."
             if not commit "root: update the `flake.lock` file"
-              echo "[!] Failed at step 3/6"
+              echo "[!] Failed at [3/6]"
               cd $cwd 2>/dev/null
               return 1
             end
-            echo "[3/6] Done."
+            echo "[3/6] Done"
 
             echo "[4/6] Rebuilding host system..."
-            if not sudo nixos-rebuild switch --flake ${env.path.flake}
-              echo "[!] Failed at step 4/6"
+            if not sudo nixos-rebuild switch --flake .#${env.user.host}
+              echo "[!] Failed at [4/6]"
               cd $cwd 2>/dev/null
               return 1
             end
-            echo "[4/6] Done."
+            echo "[4/6] Done"
 
             echo "[5/6] Deleting older generations..."
             if not sudo nix-collect-garbage -d
-              echo "[!] Failed at step 5/6"
+              echo "[!] Failed at [5/6]"
               cd $cwd 2>/dev/null
               return 1
             end
-            echo "[5/6] Done."
+            echo "[5/6] Done"
           else
-            echo "[!] Skipping step [3-5]... Done."
+            echo "[!] Skipping step [3-5]..."
           end
 
-          echo "[6/6] Back to last directory..."
-          cd $cwd
-          echo "[6/6] Done."
+          echo "[6/6] cd '${env.path.flake}' -> '$cwd'"
+          if not cd $cwd
+            echo "[!] Failed at [6/6]"
+            return 1
+          end
+          echo "[6/6] Done"
         end
       '';
       preferAbbrs = true;

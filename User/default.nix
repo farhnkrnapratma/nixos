@@ -124,8 +124,8 @@ in
         nonprintable-notation = "caret";
         number = true;
         tabs = "2";
-        theme-dark = "OneHalfDark";
-        theme-light = "OneHalfLight";
+        theme-dark = "gruvbox-dark";
+        theme-light = "gruvbox-light";
         wrap = "auto";
       };
     };

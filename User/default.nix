@@ -172,7 +172,7 @@ in
 
           set -l cmd -c fish -iP
 
-          if test -f "flake.nix"
+          if test -f "flake.nix"; and test (count $argv) -eq 0
             env NIX_SHELL="shell" nix shell $cmd
           else if test (count $argv) -eq 0
             echo "[!] No packages specified and no 'flake.nix' file found in the working directory"

@@ -154,11 +154,22 @@ in
 
         function fish_right_prompt
           if set -q NIX_SHELL
-            echo (set_color normal)"("(set_color blue)"󱄅 "(set_color cyan)$NIX_SHELL(set_color normal)")"
+            echo (set_color normal)"("(set_color cyan)$NIX_SHELL(set_color normal)")"
+          end
+        end
+
+        function head
+          if test -z "$argv[1]"
+            echo "[!] Function name can not be empty"
+            return 1
+          else
+            echo "["(set_color cyan)HEAD(set_color normal)"] "(set_color blue)@$argv[1](set_color normal)""
           end
         end
 
         function shell
+          head (status function)
+
           set -l cmd -c fish -iP
 
           if test -f "flake.nix"
@@ -172,6 +183,8 @@ in
         end
 
         function devel
+          head (status function)
+
           set -l cmd -c fish -iP
 
           if not test -f "flake.nix"
@@ -183,6 +196,8 @@ in
         end
 
         function commit
+          head (status function)
+
           if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
             echo "[!] Not in a git repository"
             return 1
@@ -243,6 +258,8 @@ in
         end
 
         function update
+          head (status function)
+
           set -l cwd (pwd)
           set -l update false
 

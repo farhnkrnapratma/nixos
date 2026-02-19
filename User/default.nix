@@ -158,7 +158,7 @@ in
           end
         end
 
-        function head
+        function fhead
           if test -z "$argv[1]"
             echo "[!] Function name can not be empty"
             return 1
@@ -168,7 +168,7 @@ in
         end
 
         function shell
-          head (status function)
+          fhead (status function)
 
           set -l cmd -c fish -iP
 
@@ -183,7 +183,7 @@ in
         end
 
         function devel
-          head (status function)
+          fhead (status function)
 
           set -l cmd -c fish -iP
 
@@ -196,7 +196,7 @@ in
         end
 
         function commit
-          head (status function)
+          fhead (status function)
 
           if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
             echo "[!] Not in a git repository"
@@ -258,7 +258,7 @@ in
         end
 
         function update
-          head (status function)
+          fhead (status function)
 
           set -l cwd (pwd)
           set -l update false

@@ -308,14 +308,7 @@ in
     };
   };
 
-  virtualisation.virtualbox.host = {
-    enable = true;
-    package = pkgs.virtualboxKvm;
-    addNetworkInterface = false;
-    enableHardening = true;
-    enableKvm = true;
-    headless = true;
-  };
+  virtualisation.virtualbox.host.enable = true;
 
   zramSwap = {
     enable = true;

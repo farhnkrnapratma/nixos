@@ -282,7 +282,7 @@ in
 
           if test "$update" = true
             echo "[3/6] Pushing changes to remote repository..."
-            if not commit "root: update the `flake.lock` file"
+            if not commit "root: update the `flake.lock` file" f flake.lock
               echo "[!] Failed at [3/6]"
               cd $cwd 2>/dev/null
               return 1

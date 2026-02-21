@@ -47,6 +47,7 @@ in
       seahorse
       snapshot
       telegram-desktop
+      termius
       vivaldi
       # CLI
       codeberg-cli

@@ -24,10 +24,12 @@ in
       verbose = false;
     };
     kernelPackages = pkgs.linuxPackagesFor pkgs.linuxKernel.kernels.linux_zen;
+    kernelModules = [ "kvm-intel" ];
     kernelParams = [
       "quiet"
       "udev.log_level=err"
     ];
+    extraModulePackages = [ pkgs.linuxKernel.packages.linux_zen.virtualbox ];
     loader = {
       efi.canTouchEfiVariables = true;
       systemd-boot = {
@@ -287,6 +289,7 @@ in
           "audio"
           "networkmanager"
           "video"
+          "vboxusers"
           "wheel"
         ];
         group = env.user.name;
@@ -302,6 +305,14 @@ in
       };
       root.initialHashedPassword = "!";
     };
+  };
+
+  virtualisation.virtualbox.host = {
+    enable = true;
+    package = pkgs.virtualboxKvm;
+    addNetworkInterface = false;
+    enableHardening = true;
+    enableKvm = true;
   };
 
   zramSwap = {

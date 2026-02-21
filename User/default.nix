@@ -57,6 +57,7 @@ in
       github-copilot-cli
       glab
       libnotify
+      mako
       qwen-code
       shellcheck
       shfmt

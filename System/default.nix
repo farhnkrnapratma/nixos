@@ -314,6 +314,7 @@ in
     addNetworkInterface = false;
     enableHardening = true;
     enableKvm = true;
+    headless = true;
   };
 
   zramSwap = {

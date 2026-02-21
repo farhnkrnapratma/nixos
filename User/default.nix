@@ -325,7 +325,7 @@ in
         nft = "nix fmt";
         nfu = "nix flake update --flake ${env.path.flake}";
         ngc = "sudo nix-collect-garbage -d";
-        nrs = "sudo nixos-rebuild switch --flake ${env.path.flake}";
+        nrs = "sudo nixos-rebuild switch --flake ${env.path.flake}#${env.user.host}";
         x = "exit";
       };
     };

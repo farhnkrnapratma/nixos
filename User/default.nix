@@ -56,6 +56,7 @@ in
       gemini-cli
       github-copilot-cli
       glab
+      libnotify
       qwen-code
       shellcheck
       shfmt

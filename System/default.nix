@@ -128,31 +128,31 @@ in
   };
 
   networking = {
+    hostName = env.user.host;
     enableIPv6 = true;
+    tempAddresses = "enabled";
+    nftables.enable = true;
     firewall = {
+      allowedTCPPorts = [ 65535 ];
       enable = true;
-      allowPing = true;
       checkReversePath = true;
       filterForward = true;
-      pingLimit = "1/minute burst 3 packets";
-      rejectPackets = true;
+      allowPing = true;
+      pingLimit = "1/minute burst 5 packets";
     };
-    hostName = env.user.host;
     networkmanager = {
       enable = true;
       dhcp = "internal";
       dns = "systemd-resolved";
-      ethernet.macAddress = "random";
-      logLevel = "OFF";
       wifi = {
         backend = "iwd";
         macAddress = "random";
         powersave = false;
         scanRandMacAddress = true;
       };
+      ethernet.macAddress = "random";
+      logLevel = "OFF";
     };
-    nftables.enable = true;
-    tempAddresses = "enabled";
     timeServers = [
       "0.id.pool.ntp.org"
       "1.id.pool.ntp.org"
@@ -208,19 +208,30 @@ in
     };
     openssh = {
       enable = true;
+      allowSFTP = false;
       banner = ''
         Hey, there!
-        You're going to access
-        this machine: ${env.user.name}@${env.user.host}
+        You're going to access this machine: ${env.user.name}@${env.user.host}
         [i] Only authorized keys can access this machine!
-        That's it. Welcome!
       '';
-      knownHosts.termux.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama";
+      generateHostKeys = false;
+      knownHosts = {
+        termius = {
+          publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHp60gbkkzDf8urz76/Wbq6td4/0gCjmjDh2T/GaqBTd Farhan Kurnia Pratama";
+          certAuthority = true;
+        };
+        termux = {
+          publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama";
+          certAuthority = true;
+        };
+      };
+      ports = [ 65535 ];
       settings = {
         KbdInteractiveAuthentication = false;
         LogLevel = "VERBOSE";
         PasswordAuthentication = false;
         PermitRootLogin = "no";
+        UseDns = true;
       };
       startWhenNeeded = true;
     };

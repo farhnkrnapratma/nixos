@@ -477,6 +477,16 @@ in
       };
     };
 
+    ssh = {
+      enable = true;
+      matchBlocks.ganymede = {
+        host = "ganymede";
+        hostname = "192.168.1.50";
+        user = "farhnkrnapratma";
+        port = 22;
+      };
+    };
+
     vscode = {
       enable = true;
       package = pkgs.vscodium;

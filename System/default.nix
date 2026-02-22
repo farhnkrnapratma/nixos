@@ -232,6 +232,8 @@ in
         PasswordAuthentication = false;
         PermitRootLogin = "no";
         UseDns = true;
+        PrintLastLog = "no";
+        PrintMotd = false;
       };
       startWhenNeeded = true;
     };

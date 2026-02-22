@@ -479,6 +479,7 @@ in
 
     ssh = {
       enable = true;
+      enableDefaultConfig = false;
       matchBlocks.ganymede = {
         host = "ganymede";
         hostname = "192.168.1.50";
@@ -498,6 +499,7 @@ in
           bierner.github-markdown-preview
           bmalehorn.vscode-fish
           editorconfig.editorconfig
+    };
           github.vscode-github-actions
           github.vscode-pull-request-github
           jdinhlife.gruvbox

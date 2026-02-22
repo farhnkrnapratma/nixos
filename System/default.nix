@@ -133,8 +133,8 @@ in
     tempAddresses = "enabled";
     nftables.enable = true;
     firewall = {
-      allowedTCPPorts = [ 65535 ];
       enable = true;
+      allowedTCPPorts = [ 65535 ];
       checkReversePath = true;
       filterForward = true;
       allowPing = true;

@@ -480,11 +480,25 @@ in
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks.ganymede = {
-        host = "ganymede";
-        hostname = "192.168.1.50";
-        user = "farhnkrnapratma";
-        port = 22;
+      matchBlocks = {
+        ganymede = {
+          host = "ganymede";
+          hostname = "192.168.1.50";
+          user = "farhnkrnapratma";
+          port = 22;
+        };
+        galileo = {
+          host = "galileo";
+          hostname = "192.168.1.51";
+          user = "farhnkrnapratma";
+          port = 22;
+        };
+        galilei = {
+          host = "galilei";
+          hostname = "192.168.1.52";
+          user = "farhnkrnapratma";
+          port = 22;
+        };
       };
     };
 

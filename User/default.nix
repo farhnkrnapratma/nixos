@@ -499,13 +499,12 @@ in
           bierner.github-markdown-preview
           bmalehorn.vscode-fish
           editorconfig.editorconfig
-    };
           github.vscode-github-actions
           github.vscode-pull-request-github
           jdinhlife.gruvbox
           jnoortheen.nix-ide
-          mads-hartmann.bash-ide-vscode
           ms-python.python
+          nefrob.vscode-just-syntax
           pkief.material-icon-theme
           rust-lang.rust-analyzer
           tamasfe.even-better-toml

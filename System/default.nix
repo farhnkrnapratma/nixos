@@ -15,21 +15,13 @@ in
   ];
 
   boot = {
-    consoleLogLevel = 0;
-    initrd = {
-      availableKernelModules = [
-        "nvme"
-        "sd_mod"
-      ];
-      verbose = false;
-    };
     kernelPackages = pkgs.linuxPackagesFor pkgs.linuxKernel.kernels.linux_zen;
+    extraModulePackages = [ pkgs.linuxKernel.packages.linux_zen.virtualbox ];
     kernelModules = [ "kvm-intel" ];
     kernelParams = [
       "quiet"
       "udev.log_level=err"
     ];
-    extraModulePackages = [ pkgs.linuxKernel.packages.linux_zen.virtualbox ];
     loader = {
       efi.canTouchEfiVariables = true;
       systemd-boot = {
@@ -40,11 +32,20 @@ in
       };
       timeout = 3;
     };
+    initrd = {
+      availableKernelModules = [
+        "nvme"
+        "sd_mod"
+      ];
+      verbose = false;
+    };
+    consoleLogLevel = 0;
   };
 
   documentation.nixos.enable = false;
 
   environment = {
+    shells = [ pkgs.fish ];
     cosmic.excludePackages = with pkgs; [
       cosmic-edit
       cosmic-files
@@ -54,7 +55,6 @@ in
       cosmic-reader
       rygel
     ];
-    shells = [ pkgs.fish ];
   };
 
   fonts = {
@@ -71,10 +71,10 @@ in
 
   fileSystems = {
     "/boot" = {
-      autoFormat = true;
       device = env.part.boot;
       fsType = "vfat";
       mountPoint = "/boot";
+      autoFormat = true;
       options = [
         "noatime"
         "nodev"
@@ -85,12 +85,12 @@ in
     };
     "/" = {
       device = env.part.mapper;
+      fsType = "ext4";
       encrypted = {
         enable = true;
         blkDev = env.part.root;
         label = env.part.luks;
       };
-      fsType = "ext4";
       options = [
         "noatime"
         "errors=remount-ro"
@@ -98,33 +98,26 @@ in
     };
   };
 
-  hardware = {
-    bluetooth.enable = false;
-    firmwareCompression = "zstd";
-  };
+  hardware.firmwareCompression = "zstd";
 
   home-manager = {
+    users.${env.user.name} = import ../User;
+    useGlobalPkgs = true;
+    useUserPackages = true;
     backupFileExtension = "bak";
     overwriteBackup = true;
-    useGlobalPkgs = true;
-    users.${env.user.name} = import ../User;
-    useUserPackages = true;
-    verbose = true;
   };
 
-  i18n = {
-    defaultLocale = "C.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "id_ID.UTF-8";
-      LC_IDENTIFICATION = "id_ID.UTF-8";
-      LC_MEASUREMENT = "C.UTF-8";
-      LC_MONETARY = "id_ID.UTF-8";
-      LC_NAME = "id_ID.UTF-8";
-      LC_NUMERIC = "C.UTF-8";
-      LC_PAPER = "id_ID.UTF-8";
-      LC_TELEPHONE = "id_ID.UTF-8";
-      LC_TIME = "C.UTF-8";
-    };
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "id_ID.UTF-8";
+    LC_IDENTIFICATION = "id_ID.UTF-8";
+    LC_MEASUREMENT = "C.UTF-8";
+    LC_MONETARY = "id_ID.UTF-8";
+    LC_NAME = "id_ID.UTF-8";
+    LC_NUMERIC = "C.UTF-8";
+    LC_PAPER = "id_ID.UTF-8";
+    LC_TELEPHONE = "id_ID.UTF-8";
+    LC_TIME = "C.UTF-8";
   };
 
   networking = {
@@ -194,12 +187,10 @@ in
   };
 
   services = {
-    desktopManager = {
-      cosmic = {
-        enable = true;
-        showExcludedPkgsWarning = false;
-        xwayland.enable = true;
-      };
+    desktopManager.cosmic = {
+      enable = true;
+      showExcludedPkgsWarning = false;
+      xwayland.enable = true;
     };
     displayManager.cosmic-greeter.enable = true;
     gnome = {
@@ -208,13 +199,15 @@ in
     };
     openssh = {
       enable = true;
+      ports = [ 65535 ];
       allowSFTP = false;
+      generateHostKeys = false;
+      startWhenNeeded = true;
       banner = ''
         Hey, there!
         You're going to access this machine: ${env.user.name}@${env.user.host}
         [i] Only authorized keys can access this machine!
       '';
-      generateHostKeys = false;
       knownHosts = {
         termius = {
           publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHp60gbkkzDf8urz76/Wbq6td4/0gCjmjDh2T/GaqBTd Farhan Kurnia Pratama";
@@ -225,7 +218,6 @@ in
           certAuthority = true;
         };
       };
-      ports = [ 65535 ];
       settings = {
         KbdInteractiveAuthentication = false;
         LogLevel = "VERBOSE";
@@ -235,7 +227,6 @@ in
         PrintLastLog = "no";
         PrintMotd = false;
       };
-      startWhenNeeded = true;
     };
     pipewire = {
       enable = true;
@@ -246,42 +237,42 @@ in
     resolved = {
       enable = true;
       settings.Resolve = {
-        Cache = "yes";
         DNS = [
           "1.1.1.1#cloudflare-dns.com"
           "[2606:4700:4700::1111]#cloudflare-dns.com"
         ];
-        DNSOverTLS = "opportunistic";
-        DNSSEC = "allow-downgrade";
-        DNSStubListener = "yes";
         FallbackDNS = [
           "9.9.9.9#dns.quad9.net"
           "[2620:fe::fe]#dns.quad9.net"
         ];
-        LLMNR = "no";
+        DNSOverTLS = "opportunistic";
+        DNSSEC = "allow-downgrade";
+        DNSStubListener = "yes";
         MulticastDNS = "no";
+        Cache = "yes";
+        LLMNR = "no";
         StaleRetentionSec = "300";
       };
     };
   };
 
   system = {
+    stateVersion = env.version;
     autoUpgrade = {
       enable = true;
-      allowReboot = true;
       dates = "daily";
       fixedRandomDelay = true;
       flake = env.path.flake;
       operation = "switch";
-      randomizedDelaySec = "10min";
-      rebootWindow = {
-        lower = "01:00";
-        upper = "05:00";
-      };
-      runGarbageCollection = true;
       upgrade = false;
+      runGarbageCollection = true;
+      randomizedDelaySec = "10min";
+      allowReboot = true;
+      rebootWindow = {
+        lower = "00:00";
+        upper = "03:00";
+      };
     };
-    stateVersion = "26.05";
   };
 
   time.timeZone = "Asia/Jakarta";
@@ -297,13 +288,13 @@ in
       ${env.user.name} = {
         createHome = true;
         description = env.user.desc;
-        expires = "2036-01-01";
+        expires = "2030-01-01";
         extraGroups = [
           "audio"
           "networkmanager"
           "video"
-          "vboxusers"
           "wheel"
+          "vboxusers"
         ];
         group = env.user.name;
         homeMode = "0700";

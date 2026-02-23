@@ -25,7 +25,7 @@ in
 
   home = {
     uid = env.user.guid;
-    stateVersion = env.tag;
+    stateVersion = env.version;
     username = env.user.name;
     homeDirectory = env.path.home;
     enableNixpkgsReleaseCheck = true;
@@ -68,9 +68,9 @@ in
       libgnome-keyring
       yaru-theme
     ];
-    sessionVariables = rec {
-      VISUAL = env.user.edit;
-      EDITOR = VISUAL;
+    sessionVariables = {
+      VISUAL = env.visual;
+      EDITOR = env.visual;
     };
     shell.enableFishIntegration = fish_enabled;
   };
@@ -137,52 +137,31 @@ in
       interactiveShellInit = ''
         set fish_greeting
 
-        function fish_right_prompt
-          if set -q NIX_SHELL
-            echo (set_color normal)"("(set_color cyan)$NIX_SHELL(set_color normal)")"
-          end
-        end
-
-        function fhead
-          if test -z "$argv[1]"
-            echo "[!] Function name can not be empty"
-            return 1
-          else
-            echo "["(set_color cyan)HEAD(set_color normal)"] "(set_color blue)@$argv[1](set_color normal)""
-          end
-        end
-
         function shell
-          fhead (status function)
-
           set -l cmd -c fish -iP
 
           if test -f "flake.nix"; and test (count $argv) -eq 0
-            env NIX_SHELL="shell" nix shell $cmd
+            nix shell $cmd
           else if test (count $argv) -eq 0
             echo "[!] No packages specified and no 'flake.nix' file found in the working directory"
             return 1
           else
-            env NIX_SHELL="shell" nix shell $argv $cmd
+            nix shell $argv $cmd
           end
         end
 
         function devel
-          fhead (status function)
-
           set -l cmd -c fish -iP
 
           if not test -f "flake.nix"
             echo "[!] No 'flake.nix' file found in the working directory"
             return 1
           else
-            env NIX_SHELL="develop" nix develop $cmd
+            nix develop $cmd
           end
         end
 
         function commit
-          fhead (status function)
-
           if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
             echo "[!] Not in a git repository"
             return 1
@@ -243,8 +222,6 @@ in
         end
 
         function update
-          fhead (status function)
-
           set -l cwd (pwd)
           set -l update false
 
@@ -301,8 +278,7 @@ in
           echo "[6/6] Done"
         end
       '';
-      preferAbbrs = true;
-      shellAbbrs = {
+      shellAliases = {
         c = "clear";
         l = "eza -lahgmuU --smart-group --icons=always --color=always --color-scale --color-scale-mode=gradient";
         x = "exit";
@@ -314,30 +290,37 @@ in
         nfu = "nix flake update --flake ${env.path.flake}";
         ngc = "sudo nix-collect-garbage -d";
         nrs = "sudo nixos-rebuild switch --flake ${env.path.flake}#${env.user.host}";
+        "-" = "cd -";
+        ".." = "cd ..";
+        "..." = "cd ../..";
       };
     };
 
-    gh = {
-      enable = true;
-      gitCredentialHelper = {
+    gh =
+      let
+        host = "github.com";
+      in
+      {
         enable = true;
-        hosts = [ "https://github.com" ];
-      };
-      hosts."github.com".user = env.user.name;
-      settings = {
-        aliases = {
-          clone = "repo clone";
-          delete = "repo delete --yes";
-          login = "auth login -cwh github.com -p https --skip-ssh-key";
-          logout = "auth logout -h github.com -u ${env.user.name}";
-          ls = "repo ls";
-          refresh = "auth refresh -ch github.com";
-          sync = "repo sync";
+        gitCredentialHelper = {
+          enable = true;
+          hosts = [ "https://${host}" ];
         };
-        editor = env.user.edit;
-        git_protocol = "https";
+        hosts.${host}.user = env.user.name;
+        settings = {
+          editor = env.visual;
+          git_protocol = "https";
+          aliases = {
+            ls = "repo ls";
+            del = "repo delete";
+            ref = "auth refresh -ch ${host}";
+            sync = "repo sync";
+            clone = "repo clone";
+            login = "auth login -cwhp https -h ${host}";
+            logout = "auth logout -u ${env.user.name} -h ${host}";
+          };
+        };
       };
-    };
 
     ghostty = {
       enable = true;
@@ -391,7 +374,7 @@ in
       };
       settings = {
         core = {
-          editor = env.user.edit;
+          editor = env.visual;
           whitespace = "trailing-space,space-before-tab";
         };
         init.defaultBranch = "main";
@@ -402,9 +385,9 @@ in
       };
       signing = lib.mkIf gpg_enabled {
         format = "openpgp";
-        key = "440D2C6DF110AF257A97C26507723A92A04788B3";
         signByDefault = true;
         signer = "${profile_dir}/bin/gpg";
+        key = "440D2C6DF110AF257A97C26507723A92A04788B3";
       };
     };
 
@@ -464,26 +447,30 @@ in
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks = {
-        ganymede = {
-          host = "ganymede";
-          hostname = "192.168.1.50";
-          user = "farhnkrnapratma";
-          port = 22;
+      matchBlocks =
+        let
+          shared = {
+            user = env.user.name;
+            port = 22;
+          };
+        in
+        {
+          ganymede = {
+            host = "ganymede";
+            hostname = "192.168.1.50";
+          }
+          // shared;
+          galileo = {
+            host = "galileo";
+            hostname = "192.168.1.51";
+          }
+          // shared;
+          galilei = {
+            host = "galilei";
+            hostname = "192.168.1.52";
+          }
+          // shared;
         };
-        galileo = {
-          host = "galileo";
-          hostname = "192.168.1.51";
-          user = "farhnkrnapratma";
-          port = 22;
-        };
-        galilei = {
-          host = "galilei";
-          hostname = "192.168.1.52";
-          user = "farhnkrnapratma";
-          port = 22;
-        };
-      };
     };
 
     vscode = {
@@ -613,15 +600,19 @@ in
 
   xdg = {
     enable = true;
-    autostart = {
-      enable = true;
-      entries = [
-        "${env.path.home}/.local/share/applications/Debian-VM.desktop"
-        "${env.path.home}/.local/share/applications/FreeBSD-VM.desktop"
-        "${env.path.home}/.local/share/applications/OmniOS-VM.desktop"
-      ];
-      readOnly = true;
-    };
+    autostart =
+      let
+        dpath = "${env.path.home}/.local/share/applications";
+      in
+      {
+        enable = true;
+        entries = [
+          "${dpath}/Debian-VM.desktop"
+          "${dpath}/FreeBSD-VM.desktop"
+          "${dpath}/OmniOS-VM.desktop"
+        ];
+        readOnly = true;
+      };
     userDirs = {
       enable = true;
       createDirectories = true;

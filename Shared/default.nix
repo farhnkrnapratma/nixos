@@ -1,18 +1,17 @@
 rec {
-  aos = "x86_64-linux"; # arch and os
-  tag = "26.05"; # always prefer unstable
-  user = rec {
-    rdns = "${host}.${name}"; # reverse domain name identifier
-    name = "farhnkrnapratma"; # username
-    guid = 1202; # group and user id
-    desc = "Farhan Kurnia Pratama"; # full name
+  system = "x86_64-linux"; # system architecture and kernel name
+  version = "26.05"; # always prefer unstable version
+  visual = "codium --wait"; # default code editor
+  user = {
     host = "dev"; # host name
-    edit = "codium --wait"; # default code editor
+    name = "farhnkrnapratma"; # username
+    desc = "Farhan Kurnia Pratama"; # full name
+    guid = 1202; # group and user id
   };
   path = rec {
     home = builtins.toPath "/home/${user.name}"; # path to home directory
-    projects = builtins.toPath "${home}/Projects"; # path to works directory
-    flake = builtins.toPath "${projects}/nixos"; # path to system flake
+    projects = builtins.toPath "${home}/Projects"; # path to projects directory
+    flake = builtins.toPath "${projects}/nixos"; # path to flake directory
   };
   part = rec {
     boot = builtins.toPath "/dev/disk/by-partlabel/EFI"; # boot partition

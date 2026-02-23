@@ -62,6 +62,7 @@ in
       shellcheck
       shfmt
       tea
+      vlock
       wl-clipboard
       # Misc
       vivaldi-ffmpeg-codecs
@@ -628,127 +629,6 @@ in
       source = ./Files/Icons;
       target = "${config.xdg.dataHome}/icons";
     };
-      let
-        pwa = {
-          fb = {
-            name = "Facebook";
-            id = "kippjfofjhjlffjecoapiogbkgbpmgej";
-          };
-          gh = {
-            name = "GitHub";
-            id = "mjoklplbddabcmpepnokjaffbmgbkkgg";
-          };
-          ig = {
-            name = "Instagram";
-            id = "akpamiohjfcnimfljfndmaldlcfphjmp";
-          };
-          wa = {
-            name = "WhatsApp";
-            id = "hnpfjngllnobngcgfapefoaidbinmjnm";
-          };
-          yt = {
-            name = "YouTube";
-            id = "agimnkijcaahngcdmfeangaknmldooml";
-          };
-        };
-        cmd = "${pkgs.vivaldi}/bin/vivaldi --profile-directory=Default";
-        shared = {
-          type = "Application";
-          prefersNonDefaultGPU = true;
-          settings = {
-            OnlyShowIn = "COSMIC";
-            SingleMainWindow = "true";
-            Version = "1.5";
-          };
-        };
-      in
-      {
-        "${env.user.rdns}-${pwa.fb.id}-${pwa.fb.name}" = rec {
-          name = pwa.fb.name;
-          genericName = name;
-          comment = "${name} helps you connect and share with the people in your life.";
-          icon = name;
-          exec = "${cmd} --app-id=${pwa.fb.id}";
-          categories = [ "Network" ];
-          settings = {
-            Keywords = "social;media;facebook;photos";
-            StartupWMClass = "crx_${pwa.fb.id}";
-          };
-          terminal = false;
-        }
-        // shared;
-        "${env.user.rdns}-${pwa.gh.id}-${pwa.gh.name}" = rec {
-          name = pwa.gh.name;
-          genericName = name;
-          comment = "${name} is where people build software";
-          icon = name;
-          exec = "${cmd} --app-id=${pwa.gh.id}";
-          categories = [ "Development" ];
-          settings = {
-            Keywords = "development;git;github";
-            StartupWMClass = "crx_${pwa.gh.id}";
-          };
-          terminal = false;
-        }
-        // shared;
-        "${env.user.rdns}-${pwa.ig.id}-${pwa.ig.name}" = rec {
-          name = pwa.ig.name;
-          genericName = name;
-          comment = "Share what you're into with the people who get you";
-          icon = name;
-          exec = "${cmd} --app-id=${pwa.ig.id}";
-          categories = [ "Network" ];
-          settings = {
-            Keywords = "social;media;instagram;photos";
-            StartupWMClass = "crx_${pwa.ig.id}";
-          };
-          terminal = false;
-        }
-        // shared;
-        "${env.user.rdns}-${pwa.wa.id}-${pwa.wa.name}" = rec {
-          name = pwa.wa.name;
-          genericName = "${name} Web";
-          comment = "Secure and Reliable Free Private Messaging and Calling";
-          icon = name;
-          exec = "${cmd} --app-id=${pwa.wa.id}";
-          categories = [
-            "Network"
-            "InstantMessaging"
-          ];
-          settings = {
-            Keywords = "chat;messaging;whatsapp;communication";
-            StartupWMClass = "crx_${pwa.wa.id}";
-          };
-          terminal = false;
-        }
-        // shared;
-        "${env.user.rdns}-${pwa.yt.id}-${pwa.yt.name}" = rec {
-          name = pwa.yt.name;
-          genericName = name;
-          comment = "Share your videos with friends, family, and the world";
-          icon = name;
-          exec = "${cmd} --app-id=${pwa.yt.id}";
-          actions = {
-            exp = {
-              name = "Explore";
-              icon = pwa.yt.name;
-              exec = ''${cmd} --app-id=${pwa.yt.id} "--app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/explore?feature=app_shortcuts"'';
-            };
-            sub = {
-              name = "Subscriptions";
-              icon = pwa.yt.name;
-              exec = ''${cmd} --app-id=${pwa.yt.id} "--app-launch-url-for-shortcuts-menu-item=https://www.youtube.com/feed/subscriptions?feature=app_shortcuts"'';
-            };
-          };
-          categories = [ "AudioVideo" ];
-          settings = {
-            Keywords = "video;streaming;youtube;media";
-            StartupWMClass = "crx_${pwa.yt.id}";
-          };
-          terminal = false;
-        }
-        // shared;
-      };
     userDirs = {
       enable = true;
       createDirectories = true;

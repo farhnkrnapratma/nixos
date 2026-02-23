@@ -6,7 +6,7 @@
 }:
 let
   env = import ../Shared;
-  profile_directory = config.home.profileDirectory;
+  profile_dir = config.home.profileDirectory;
   fish_enabled = config.programs.fish.enable;
   gpg_enabled = config.programs.gpg.enable;
 in
@@ -407,7 +407,7 @@ in
         format = "openpgp";
         key = "440D2C6DF110AF257A97C26507723A92A04788B3";
         signByDefault = true;
-        signer = "${profile_directory}/bin/gpg";
+        signer = "${profile_dir}/bin/gpg";
       };
     };
 
@@ -579,7 +579,7 @@ in
           window.autoDetectColorScheme = true;
           workbench = {
             editor.showTabIndex = true;
-            externalBrowser = "${profile_directory}/bin/brave";
+            externalBrowser = "${profile_dir}/bin/brave";
             iconTheme = "material-icon-theme";
             preferredDarkColorTheme = "Gruvbox Dark Medium";
             preferredLightColorTheme = "Gruvbox Light Medium";
@@ -616,12 +616,14 @@ in
 
   xdg = {
     enable = true;
-    dataFile.icons = {
+    autostart = {
       enable = true;
-      ignorelinks = true;
-      recursive = true;
-      source = ./Files/Icons;
-      target = "${config.xdg.dataHome}/icons";
+      entries = [
+        "${xdg.dataHome}/share/applications/Debian-VM.desktop"
+        "${xdg.dataHome}/share/applications/FreeBSD-VM.desktop"
+        "${xdg.dataHome}/share/applications/OmniOS-VM.desktop"
+      ];
+      readOnly = true;
     };
     userDirs = {
       enable = true;

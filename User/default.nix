@@ -145,7 +145,7 @@ in
       enable = true;
       generateCompletions = true;
       interactiveShellInit = ''
-        set fish_greeting (uname -a)
+        set fish_greeting
 
         function fish_right_prompt
           if set -q NIX_SHELL
@@ -628,7 +628,6 @@ in
       source = ./Files/Icons;
       target = "${config.xdg.dataHome}/icons";
     };
-    desktopEntries =
       let
         pwa = {
           fb = {

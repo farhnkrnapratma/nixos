@@ -290,7 +290,6 @@ in
         nfu = "nix flake update --flake ${env.path.flake}";
         ngc = "sudo nix-collect-garbage -d";
         nrs = "sudo nixos-rebuild switch --flake ${env.path.flake}#${env.user.host}";
-        "-" = "cd -";
         ".." = "cd ..";
         "..." = "cd ../..";
       };

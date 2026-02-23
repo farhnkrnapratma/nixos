@@ -304,14 +304,16 @@ in
       preferAbbrs = true;
       shellAbbrs = {
         c = "clear";
-        l = "eza -lahgmuU --smart-group";
-        ls = "eza";
+        l = "eza -lahgmuU --smart-group --icons=always --color=always --color-scale --color-scale-mode=gradient";
+        x = "exit";
+        ga = "git add -A";
+        gc = "git commit -s -m";
+        ls = "eza --icons=always --color=always --color-scale --color-scale-mode=gradient";
         nfc = "nix flake check";
         nft = "nix fmt";
         nfu = "nix flake update --flake ${env.path.flake}";
         ngc = "sudo nix-collect-garbage -d";
         nrs = "sudo nixos-rebuild switch --flake ${env.path.flake}#${env.user.host}";
-        x = "exit";
       };
     };
 

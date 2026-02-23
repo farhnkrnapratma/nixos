@@ -619,9 +619,9 @@ in
     autostart = {
       enable = true;
       entries = [
-        "${xdg.dataHome}/share/applications/Debian-VM.desktop"
-        "${xdg.dataHome}/share/applications/FreeBSD-VM.desktop"
-        "${xdg.dataHome}/share/applications/OmniOS-VM.desktop"
+        "${env.path.home}/.local/share/applications/Debian-VM.desktop"
+        "${env.path.home}/.local/share/applications/FreeBSD-VM.desktop"
+        "${env.path.home}/.local/share/applications/OmniOS-VM.desktop"
       ];
       readOnly = true;
     };

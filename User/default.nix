@@ -6,31 +6,29 @@
 }:
 let
   env = import ../Shared;
-  profile_dir = config.home.profileDirectory;
-  fish_enabled = config.programs.fish.enable;
   gpg_enabled = config.programs.gpg.enable;
+  fish_enabled = config.programs.fish.enable;
+  profile_dir = config.home.profileDirectory;
 in
 {
   editorconfig = {
     enable = true;
-    settings = {
-      "*" = {
-        charset = "utf-8";
-        end_of_line = "lf";
-        indent_size = 2;
-        indent_style = "space";
-        insert_final_newline = true;
-        trim_trailing_whitespace = true;
-      };
+    settings."*" = {
+      charset = "utf-8";
+      end_of_line = "lf";
+      indent_size = 2;
+      indent_style = "space";
+      insert_final_newline = true;
+      trim_trailing_whitespace = true;
     };
   };
 
   home = {
     uid = env.user.guid;
-    username = env.user.name;
-    enableNixpkgsReleaseCheck = true;
-    homeDirectory = env.path.home;
     stateVersion = env.tag;
+    username = env.user.name;
+    homeDirectory = env.path.home;
+    enableNixpkgsReleaseCheck = true;
     packages = with pkgs; [
       # GUI
       discord
@@ -56,6 +54,7 @@ in
       gemini-cli
       github-copilot-cli
       glab
+      gnome-keyring
       libnotify
       mako
       qwen-code
@@ -66,7 +65,6 @@ in
       wl-clipboard
       # Misc
       vivaldi-ffmpeg-codecs
-      gnome-keyring
       libgnome-keyring
       yaru-theme
     ];
@@ -74,10 +72,7 @@ in
       VISUAL = env.user.edit;
       EDITOR = VISUAL;
     };
-    shell = {
-      enableFishIntegration = true;
-      enableShellIntegration = true;
-    };
+    shell.enableFishIntegration = fish_enabled;
   };
 
   programs = {
@@ -130,7 +125,7 @@ in
 
     eza = {
       enable = true;
-      enableFishIntegration = true;
+      enableFishIntegration = fish_enabled;
       colors = "auto";
       git = true;
       icons = "auto";
@@ -592,7 +587,7 @@ in
     };
     zoxide = {
       enable = true;
-      enableFishIntegration = true;
+      enableFishIntegration = fish_enabled;
       options = [ "--cmd cd" ];
     };
   };

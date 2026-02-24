@@ -55,8 +55,6 @@ in
       github-copilot-cli
       glab
       gnome-keyring
-      libnotify
-      mako
       qwen-code
       shellcheck
       shfmt

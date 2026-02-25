@@ -137,7 +137,7 @@ in
         set fish_greeting
 
         function shell
-          set -l cmd -c fish -iP
+          set -l cmd fish -i
 
           if test -f "flake.nix"; and test (count $argv) -eq 0
             nix shell $cmd
@@ -150,7 +150,7 @@ in
         end
 
         function devel
-          set -l cmd -c fish -iP
+          set -l cmd fish -i
 
           if not test -f "flake.nix"
             echo "[!] No 'flake.nix' file found in the working directory"
@@ -203,21 +203,18 @@ in
               echo "[!] Invalid mode: $mode"
               return 1
           end
-          echo "[1/3] Done"
 
           echo "[2/3] Committing staged changes..."
           if not git commit -s -m "$cmsg"
             echo "[!] Failed at [2/3]"
             return 1
           end
-          echo "[2/3] Done"
 
           echo "[3/3] Pushing commits..."
           if not git push
             echo "[!] Failed at [3/3]"
             return 1
           end
-          echo "[3/3] Done"
         end
 
         function update
@@ -229,7 +226,6 @@ in
             echo "[!] Failed at [1/6]"
             return 1
           end
-          echo "[1/6] Done"
 
           echo "[2/6] Updating flakes..."
           if not nix flake update
@@ -238,8 +234,9 @@ in
             return 1
           end
           git diff --quiet -- flake.lock; or set update true
-          test "$update" = false; and echo "[!] No flakes update available"
-          echo "[2/6] Done"
+          if test "$update" = false
+            echo "[!] No flakes update available"
+          end
 
           if test "$update" = true
             echo "[3/6] Pushing changes to remote repository..."
@@ -248,7 +245,6 @@ in
               cd $cwd 2>/dev/null
               return 1
             end
-            echo "[3/6] Done"
 
             echo "[4/6] Rebuilding host system..."
             if not sudo nixos-rebuild switch --flake .#${env.user.host}
@@ -256,7 +252,6 @@ in
               cd $cwd 2>/dev/null
               return 1
             end
-            echo "[4/6] Done"
 
             echo "[5/6] Deleting older generations..."
             if not sudo nix-collect-garbage -d
@@ -264,7 +259,6 @@ in
               cd $cwd 2>/dev/null
               return 1
             end
-            echo "[5/6] Done"
           else
             echo "[!] Skipping step [3-5]..."
           end
@@ -274,7 +268,6 @@ in
             echo "[!] Failed at [6/6]"
             return 1
           end
-          echo "[6/6] Done"
         end
       '';
       shellAliases = {

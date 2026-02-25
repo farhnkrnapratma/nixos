@@ -71,6 +71,7 @@ in
       EDITOR = env.visual;
     };
     shell.enableFishIntegration = fish_enabled;
+    preferXdgDirectories = true;
   };
 
   programs = {
@@ -599,7 +600,7 @@ in
     enable = true;
     autostart =
       let
-        dpath = "${env.path.home}/.local/share/applications";
+        dpath = "${config.xdg.dataHome}/applications";
       in
       {
         enable = true;

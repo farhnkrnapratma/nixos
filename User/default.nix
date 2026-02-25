@@ -276,6 +276,7 @@ in
         x = "exit";
         ga = "git add -A";
         gc = "git commit -s -m";
+        gp = "git push";
         ls = "eza --icons=always --color=always --color-scale --color-scale-mode=gradient";
         nfc = "nix flake check";
         nft = "nix fmt";

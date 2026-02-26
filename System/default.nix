@@ -206,7 +206,7 @@ in
       banner = ''
         Hey, there!
         You're going to access this machine: ${env.user.name}@${env.user.host}
-        [i] Only authorized keys can access this machine!
+        (i) Only authorized keys can access this machine!
       '';
       knownHosts = {
         termius = {

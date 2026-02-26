@@ -142,7 +142,7 @@ in
           if test -f "flake.nix"; and test (count $argv) -eq 0
             nix shell $cmd
           else if test (count $argv) -eq 0
-            echo "[!] No packages specified and no 'flake.nix' file found in the working directory"
+            echo "(!) No packages specified and no 'flake.nix' file found in the working directory"
             return 1
           else
             nix shell $argv $cmd
@@ -153,7 +153,7 @@ in
           set -l cmd fish -i
 
           if not test -f "flake.nix"
-            echo "[!] No 'flake.nix' file found in the working directory"
+            echo "(!) No 'flake.nix' file found in the working directory"
             return 1
           else
             nix develop $cmd
@@ -162,7 +162,7 @@ in
 
         function commit
           if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
-            echo "[!] Not in a git repository"
+            echo "(!) Not in a git repository"
             return 1
           end
 
@@ -171,48 +171,48 @@ in
           set -l files $argv[3..-1]
 
           if test -z "$cmsg"
-            echo "[!] Commit messages cannot be empty"
+            echo "(!) Commit messages cannot be empty"
             return 1
           end
 
           test -n "$mode"; or set mode a
 
-          echo "[1/3] Staging changes..."
+          echo "(1/3) Staging changes..."
           switch $mode
             case a
               if not git add -A
-                echo "[!] Failed at [1/3]"
+                echo "(!) Failed at [1/3]"
                 return 1
               end
             case f
               if test (count $files) -eq 0
-                echo "[!] No files specified for mode 'f'"
+                echo "(!) No files specified"
                 return 1
               end
               for f in $files
                 if not test -e "$f"
-                  echo "[!] File not found: '$f'"
+                  echo "(!) File not found: $f"
                   return 1
                 end
               end
               if not git add $files
-                echo "[!] Failed at [1/3]"
+                echo "(!) Failed at [1/3]"
                 return 1
               end
             case '*'
-              echo "[!] Invalid mode: $mode"
+              echo "(!) Invalid mode: $mode"
               return 1
           end
 
-          echo "[2/3] Committing staged changes..."
+          echo "(2/3) Committing staged changes..."
           if not git commit -s -m "$cmsg"
-            echo "[!] Failed at [2/3]"
+            echo "(!) Failed at [2/3]"
             return 1
           end
 
-          echo "[3/3] Pushing commits..."
+          echo "(3/3) Pushing commits..."
           if not git push
-            echo "[!] Failed at [3/3]"
+            echo "(!) Failed at [3/3]"
             return 1
           end
         end
@@ -221,51 +221,51 @@ in
           set -l cwd (pwd)
           set -l update false
 
-          echo "[1/6] cd '$cwd' -> '${env.path.flake}'"
+          echo "(1/6) cd '$cwd' -> '${env.path.flake}'"
           if not cd ${env.path.flake}
-            echo "[!] Failed at [1/6]"
+            echo "(!) Failed at (1/6)"
             return 1
           end
 
-          echo "[2/6] Updating flakes..."
+          echo "(2/6) Updating flakes..."
           if not nix flake update
-            echo "[!] Failed at [2/6]"
+            echo "(!) Failed at (2/6)"
             cd $cwd 2>/dev/null
             return 1
           end
           git diff --quiet -- flake.lock; or set update true
           if test "$update" = false
-            echo "[!] No flakes update available"
+            echo "(i) No flakes update available"
           end
 
           if test "$update" = true
-            echo "[3/6] Pushing changes to remote repository..."
-            if not commit "root: update the `flake.lock` file" f flake.lock
-              echo "[!] Failed at [3/6]"
+            echo "(3/6) Pushing changes to remote repository..."
+            if not commit "root: update the flake lock file" f "flake.lock"
+              echo "(!) Failed at (3/6)"
               cd $cwd 2>/dev/null
               return 1
             end
 
-            echo "[4/6] Rebuilding host system..."
+            echo "(4/6) Rebuilding host system..."
             if not sudo nixos-rebuild switch --flake .#${env.user.host}
-              echo "[!] Failed at [4/6]"
+              echo "(!) Failed at (4/6)"
               cd $cwd 2>/dev/null
               return 1
             end
 
-            echo "[5/6] Deleting older generations..."
+            echo "(5/6) Deleting older generations..."
             if not sudo nix-collect-garbage -d
-              echo "[!] Failed at [5/6]"
+              echo "(!) Failed at (5/6)"
               cd $cwd 2>/dev/null
               return 1
             end
           else
-            echo "[!] Skipping step [3-5]..."
+            echo "(i) Skipping step (3-5)..."
           end
 
-          echo "[6/6] cd '${env.path.flake}' -> '$cwd'"
+          echo "(6/6) cd '${env.path.flake}' -> '$cwd'"
           if not cd $cwd
-            echo "[!] Failed at [6/6]"
+            echo "(!) Failed at (6/6)"
             return 1
           end
         end

@@ -592,19 +592,6 @@ in
 
   xdg = {
     enable = true;
-    autostart =
-      let
-        dpath = "${config.xdg.dataHome}/applications";
-      in
-      {
-        enable = true;
-        entries = [
-          "${dpath}/Debian-VM.desktop"
-          "${dpath}/FreeBSD-VM.desktop"
-          "${dpath}/OmniOS-VM.desktop"
-        ];
-        readOnly = true;
-      };
     userDirs = {
       enable = true;
       createDirectories = true;

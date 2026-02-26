@@ -439,30 +439,6 @@ in
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks =
-        let
-          shared = {
-            user = env.user.name;
-            port = 22;
-          };
-        in
-        {
-          ganymede = {
-            host = "ganymede";
-            hostname = "192.168.1.50";
-          }
-          // shared;
-          galileo = {
-            host = "galileo";
-            hostname = "192.168.1.51";
-          }
-          // shared;
-          galilei = {
-            host = "galilei";
-            hostname = "192.168.1.52";
-          }
-          // shared;
-        };
     };
 
     vscode = {

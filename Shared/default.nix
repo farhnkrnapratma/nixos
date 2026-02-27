@@ -4,6 +4,7 @@ rec {
   visual = "codium --wait"; # default code editor
   user = {
     host = "dev"; # host name
+    domain = "home.arpa"; # # special-use domain (RFC 8375)
     name = "farhnkrnapratma"; # username
     desc = "Farhan Kurnia Pratama"; # full name
     guid = 1202; # group and user id

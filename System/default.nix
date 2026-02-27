@@ -122,7 +122,8 @@ in
 
   networking = {
     hostName = env.user.host;
-    enableIPv6 = true;
+    domain = env.user.domain;
+    search = [ env.user.domain ];
     tempAddresses = "enabled";
     nftables.enable = true;
     firewall = {

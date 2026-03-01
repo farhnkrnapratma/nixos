@@ -60,6 +60,8 @@ in
       github-copilot-cli
       glab
       gnome-keyring
+      just
+      just-lsp
       qwen-code
       shellcheck
       shfmt

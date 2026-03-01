@@ -33,7 +33,6 @@ in
       # GUI
       amberol
       baobab
-      discord
       element-desktop
       gnome-calculator
       gnome-characters

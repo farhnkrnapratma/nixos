@@ -31,11 +31,17 @@ in
     enableNixpkgsReleaseCheck = true;
     packages = with pkgs; [
       # GUI
+      baobab
       discord
       element-desktop
       gnome-calculator
+      gnome-calendar
       gnome-characters
       gnome-clocks
+      gnome-music
+      gnome-sound-recorder
+      gnome-text-editor
+      gnome-weather
       loupe
       nautilus
       onlyoffice-desktopeditors

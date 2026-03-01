@@ -137,20 +137,18 @@ in
         set fish_greeting
 
         function shell
-          set -l cmd fish -i
-
           if test -f "flake.nix"; and test (count $argv) -eq 0
-            nix shell $cmd
+            nix shell
           else if test (count $argv) -eq 0
             echo "(!) No packages specified and no 'flake.nix' file found in the working directory"
             return 1
           else
-            nix shell $argv $cmd
+            nix shell $argv
           end
         end
 
         function devel
-          set -l cmd fish -i
+          set -l cmd -c fish -i
 
           if not test -f "flake.nix"
             echo "(!) No 'flake.nix' file found in the working directory"

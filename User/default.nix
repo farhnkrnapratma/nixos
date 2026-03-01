@@ -450,15 +450,9 @@ in
       enable = true;
       vencord = {
         useSystem = true;
-        themes = {
-          "system24.css" = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/refact0r/system24/master/theme/system24.theme.css";
-            sha256 = "sha256-cNrrCMC/GS8yi9kZW2cOXVmnCjffKOUjgO238pD2h7s=";
-          };
-          "system24-mocha.css" = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/refact0r/system24/master/theme/flavors/system24-catppuccin-mocha.theme.css";
-            sha256 = "sha256-nHl+K7MTNt0d7NjxHBWhdX7OPoJ/+bxynaHw2I0/eNk=";
-          };
+        themes."system24.css" = pkgs.fetchurl {
+          url = "https://raw.githubusercontent.com/refact0r/system24/master/theme/system24.theme.css";
+          sha256 = "sha256-cNrrCMC/GS8yi9kZW2cOXVmnCjffKOUjgO238pD2h7s=";
         };
       };
     };

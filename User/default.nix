@@ -586,15 +586,11 @@ in
     enable = true;
     userDirs = {
       enable = true;
-      createDirectories = true;
       desktop = null;
-      documents = "${env.path.home}/Documents";
-      download = "${env.path.home}/Downloads";
-      music = null;
-      pictures = "${env.path.home}/Pictures";
       publicShare = null;
       templates = null;
       videos = null;
+      createDirectories = true;
       extraConfig = {
         XDG_PROJECTS_DIR = env.path.projects;
       };

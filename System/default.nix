@@ -177,6 +177,8 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  programs.nix-ld.enable = true;
+
   security = {
     protectKernelImage = true;
     rtkit.enable = true;

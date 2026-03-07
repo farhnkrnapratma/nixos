@@ -306,10 +306,6 @@ in
         isNormalUser = true;
         shell = pkgs.fish;
         uid = env.user.guid;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama" # Termux
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHp60gbkkzDf8urz76/Wbq6td4/0gCjmjDh2T/GaqBTd Farhan Kurnia Pratama" # Termius
-        ];
       };
       root.initialHashedPassword = "!";
     };

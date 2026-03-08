@@ -123,8 +123,8 @@ in
         nonprintable-notation = "caret";
         number = true;
         tabs = "2";
-        theme-dark = "gruvbox-dark";
-        theme-light = "gruvbox-light";
+        theme-dark = "Catppuccin Mocha";
+        theme-light = "Catppuccin Latte";
         wrap = "auto";
       };
     };
@@ -329,13 +329,13 @@ in
         background-opacity = 1;
         cursor-style = "underline";
         cursor-style-blink = true;
-        font-family = "JetBrainsMono Nerd Font";
+        font-family = "Google Sans Code";
         font-feature = "+calt, +liga, +dlig";
         font-size = 11;
         link-previews = true;
         shell-integration = if fish_enabled then "fish" else "detect";
         shell-integration-features = "no-cursor";
-        theme = "dark:Gruvbox Dark,light:Gruvbox Light";
+        theme = "dark:Catppuccin Mocha,light:Catppuccin Latte";
         window-decoration = "none";
         window-padding-balance = true;
         window-padding-x = 3;
@@ -446,6 +446,94 @@ in
       enableDefaultConfig = false;
     };
 
+    starship = rec {
+      enable = true;
+      enableFishIntegration = fish_enabled;
+      enableTransience = enableFishIntegration;
+      configPath = "${config.xdg.configHome}/starship/starship.toml";
+      presets = [ "nerd-font-symbols" ];
+      settings = {
+        add_newline = false;
+        format = lib.concatStrings [
+          "$directory"
+          "$git_branch"
+          "$git_status"
+          "$aws"
+          "$buf"
+          "$bun"
+          "$c"
+          "$cpp"
+          "$cmake"
+          "$conda"
+          "$crystal"
+          "$dart"
+          "$deno"
+          "$docker_context"
+          "$elixir"
+          "$elm"
+          "$fennel"
+          "$fortran"
+          "$fossil_branch"
+          "$gcloud"
+          "$golang"
+          "$gradle"
+          "$guix_shell"
+          "$haskell"
+          "$haxe"
+          "$java"
+          "$julia"
+          "$kotlin"
+          "$lua"
+          "$meson"
+          "$nim"
+          "$nix_shell"
+          "$nodejs"
+          "$ocaml"
+          "$package"
+          "$perl"
+          "$php"
+          "$pixi"
+          "$python"
+          "$rlang"
+          "$ruby"
+          "$rust"
+          "$scala"
+          "$swift"
+          "$xmake"
+          "$zig"
+          "$line_break"
+          "[✦ ](bright-blue)"
+          "[at ](bright-white)"
+          "$time"
+          "$character"
+        ];
+        directory = {
+          style = "bright-cyan";
+          truncation_length = 1;
+          truncation_symbol = "C:\\Windows\\";
+        };
+        git_branch = {
+          format = "on [$symbol$branch]($style) ";
+          style = "bright-purple";
+        };
+        git_status = {
+          format = "([$all_status$ahead_behind]($style) )";
+          staged = "+";
+          style = "bright-yellow";
+        };
+        time = {
+          disabled = false;
+          format = "[$time]($style) ";
+          time_format = "%H:%M:%S";
+          style = "bright-yellow";
+        };
+        character = {
+          success_symbol = "[→](bright-green)";
+          error_symbol = "[→](bright-red)";
+        };
+      };
+    };
+
     vesktop = {
       enable = true;
       vencord = {
@@ -466,15 +554,14 @@ in
         enableUpdateCheck = false;
         extensions = with pkgs.vscode-extensions; [
           bierner.github-markdown-preview
-          bmalehorn.vscode-fish
+          catppuccin.catppuccin-vsc
+          catppuccin.catppuccin-vsc-icons
           editorconfig.editorconfig
           github.vscode-github-actions
           github.vscode-pull-request-github
-          jdinhlife.gruvbox
           jnoortheen.nix-ide
           ms-python.python
           nefrob.vscode-just-syntax
-          pkief.material-icon-theme
           rust-lang.rust-analyzer
           tamasfe.even-better-toml
         ];
@@ -486,7 +573,7 @@ in
             cursorBlinking = "smooth";
             cursorSmoothCaretAnimation = "on";
             cursorStyle = "underline";
-            fontFamily = "'JetBrainsMono Nerd Font', monospace";
+            fontFamily = "'Google Sans Code', monospace";
             fontLigatures = true;
             fontSize = 14;
             inertialScroll = true;
@@ -538,7 +625,7 @@ in
             cursorStyleInactive = "line";
             defaultProfile.linux = "fish";
             enableImages = true;
-            fontFamily = "'JetBrainsMono Nerd Font', monospace";
+            fontFamily = "'Google Sans Code', monospace";
             fontLigatures.enabled = true;
             gpuAcceleration = "on";
             smoothScrolling = true;
@@ -548,9 +635,9 @@ in
           workbench = {
             editor.showTabIndex = true;
             externalBrowser = "${profile_dir}/bin/brave";
-            iconTheme = "material-icon-theme";
-            preferredDarkColorTheme = "Gruvbox Dark Medium";
-            preferredLightColorTheme = "Gruvbox Light Medium";
+            iconTheme = "catppuccin-mocha";
+            preferredDarkColorTheme = "Catppuccin Mocha";
+            preferredLightColorTheme = "Cattpuccin Latte";
             startupEditor = "none";
             tips.enabled = false;
             tree.renderIndentGuides = "always";

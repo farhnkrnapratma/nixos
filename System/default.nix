@@ -12,6 +12,7 @@ in
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480s
+    ./fonts
   ];
 
   boot = {
@@ -54,18 +55,6 @@ in
       cosmic-term
       cosmic-reader
       rygel
-    ];
-  };
-
-  fonts = {
-    fontconfig.defaultFonts = {
-      monospace = [ "Noto Sans Mono" ];
-      sansSerif = [ "Noto Sans" ];
-      serif = [ "Noto Serif" ];
-    };
-    packages = with pkgs; [
-      noto-fonts-cjk-sans
-      nerd-fonts.jetbrains-mono
     ];
   };
 

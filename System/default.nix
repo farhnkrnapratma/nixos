@@ -12,6 +12,7 @@ in
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480s
+    ./fonts
   ];
 
   boot = {
@@ -54,18 +55,6 @@ in
       cosmic-term
       cosmic-reader
       rygel
-    ];
-  };
-
-  fonts = {
-    fontconfig.defaultFonts = {
-      monospace = [ "Noto Sans Mono" ];
-      sansSerif = [ "Noto Sans" ];
-      serif = [ "Noto Serif" ];
-    };
-    packages = with pkgs; [
-      noto-fonts-cjk-sans
-      nerd-fonts.jetbrains-mono
     ];
   };
 
@@ -176,6 +165,8 @@ in
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  programs.nix-ld.enable = true;
 
   security = {
     protectKernelImage = true;
@@ -304,10 +295,6 @@ in
         isNormalUser = true;
         shell = pkgs.fish;
         uid = env.user.guid;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVDKzJp2tFsXc0B+S0cKjqs3Gulp31lY2pV/E1r2Rmy Farhan Kurnia Pratama" # Termux
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHp60gbkkzDf8urz76/Wbq6td4/0gCjmjDh2T/GaqBTd Farhan Kurnia Pratama" # Termius
-        ];
       };
       root.initialHashedPassword = "!";
     };

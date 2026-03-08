@@ -33,7 +33,6 @@ in
       # GUI
       amberol
       baobab
-      discord
       element-desktop
       gnome-calculator
       gnome-characters
@@ -61,6 +60,8 @@ in
       github-copilot-cli
       glab
       gnome-keyring
+      just
+      just-lsp
       qwen-code
       shellcheck
       shfmt
@@ -122,8 +123,8 @@ in
         nonprintable-notation = "caret";
         number = true;
         tabs = "2";
-        theme-dark = "gruvbox-dark";
-        theme-light = "gruvbox-light";
+        theme-dark = "Catppuccin Mocha";
+        theme-light = "Catppuccin Latte";
         wrap = "auto";
       };
     };
@@ -328,13 +329,13 @@ in
         background-opacity = 1;
         cursor-style = "underline";
         cursor-style-blink = true;
-        font-family = "JetBrainsMono Nerd Font";
+        font-family = "Google Sans Code";
         font-feature = "+calt, +liga, +dlig";
         font-size = 11;
         link-previews = true;
         shell-integration = if fish_enabled then "fish" else "detect";
         shell-integration-features = "no-cursor";
-        theme = "dark:Gruvbox Dark,light:Gruvbox Light";
+        theme = "dark:Catppuccin Mocha,light:Catppuccin Latte";
         window-decoration = "none";
         window-padding-balance = true;
         window-padding-x = 3;
@@ -471,15 +472,14 @@ in
         enableUpdateCheck = false;
         extensions = with pkgs.vscode-extensions; [
           bierner.github-markdown-preview
-          bmalehorn.vscode-fish
+          catppuccin.catppuccin-vsc
+          catppuccin.catppuccin-vsc-icons
           editorconfig.editorconfig
           github.vscode-github-actions
           github.vscode-pull-request-github
-          jdinhlife.gruvbox
           jnoortheen.nix-ide
           ms-python.python
           nefrob.vscode-just-syntax
-          pkief.material-icon-theme
           rust-lang.rust-analyzer
           tamasfe.even-better-toml
         ];
@@ -491,7 +491,7 @@ in
             cursorBlinking = "smooth";
             cursorSmoothCaretAnimation = "on";
             cursorStyle = "underline";
-            fontFamily = "'JetBrainsMono Nerd Font', monospace";
+            fontFamily = "'Google Sans Code', monospace";
             fontLigatures = true;
             fontSize = 14;
             inertialScroll = true;
@@ -543,7 +543,7 @@ in
             cursorStyleInactive = "line";
             defaultProfile.linux = "fish";
             enableImages = true;
-            fontFamily = "'JetBrainsMono Nerd Font', monospace";
+            fontFamily = "'Google Sans Code', monospace";
             fontLigatures.enabled = true;
             gpuAcceleration = "on";
             smoothScrolling = true;
@@ -553,9 +553,9 @@ in
           workbench = {
             editor.showTabIndex = true;
             externalBrowser = "${profile_dir}/bin/brave";
-            iconTheme = "material-icon-theme";
-            preferredDarkColorTheme = "Gruvbox Dark Medium";
-            preferredLightColorTheme = "Gruvbox Light Medium";
+            iconTheme = "catppuccin-mocha";
+            preferredDarkColorTheme = "Catppuccin Mocha";
+            preferredLightColorTheme = "Cattpuccin Latte";
             startupEditor = "none";
             tips.enabled = false;
             tree.renderIndentGuides = "always";
@@ -591,15 +591,11 @@ in
     enable = true;
     userDirs = {
       enable = true;
-      createDirectories = true;
       desktop = null;
-      documents = "${env.path.home}/Documents";
-      download = "${env.path.home}/Downloads";
-      music = null;
-      pictures = "${env.path.home}/Pictures";
       publicShare = null;
       templates = null;
       videos = null;
+      createDirectories = true;
       extraConfig = {
         XDG_PROJECTS_DIR = env.path.projects;
       };

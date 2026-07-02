@@ -1,0 +1,3 @@
+{
+  imports = [ ./cosmic-greeter.nix ];
+}

@@ -1,0 +1,6 @@
+# Normalize line endings to LF for all text files
+* text=auto eol=lf
+
+# Mark generated files
+*.lock linguist-generated=true
+*.lock merge=ours

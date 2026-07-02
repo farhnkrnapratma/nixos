@@ -1,0 +1,20 @@
+{
+  imports = [
+    ./Boot
+    ./Documentation
+    ./Environment
+    ./FileSystems
+    ./Fonts
+    ./HomeManager
+    ./Locale
+    ./Networking
+    ./Nix
+    ./Nixpkgs
+    ./Security
+    ./Services
+    ./System
+    ./Time
+    ./Users
+    ./ZramSwap
+  ];
+}

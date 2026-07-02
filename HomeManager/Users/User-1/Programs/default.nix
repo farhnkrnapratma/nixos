@@ -1,0 +1,19 @@
+{
+  imports = [
+    ./aria2.nix
+    ./bat.nix
+    ./eza.nix
+    ./fastfetch.nix
+    ./firefox.nix
+    ./fish.nix
+    ./gh.nix
+    ./ghostty.nix
+    ./git.nix
+    ./gpg.nix
+    ./ssh.nix
+    ./starship.nix
+    ./vesktop.nix
+    ./vscodium.nix
+    ./zoxide.nix
+  ];
+}

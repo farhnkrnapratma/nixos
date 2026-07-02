@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# Synopsis: Secure in-place GPG encryption/decryption for env.toml.
+# This script prevents double-encryption by verifying the file's header.
+# If an encryption attempt is made on an already encrypted file,
+# it will gracefully exit with a success message instead of failing or decrypting.
+
+set -euo pipefail
+
+TARGET="env.toml"
+TMPFILE="${TARGET}.tmp"
+
+die() {
+  printf 'error: %s\n' "$*" >&2
+  exit 1
+}
+
+require_cmd() {
+  command -v "$1" &>/dev/null || die "'$1' is not installed"
+}
+
+secure_remove() {
+  if command -v shred &>/dev/null; then
+    shred -u "$1"
+  else
+    dd if=/dev/urandom of="$1" bs=1 count="$(wc -c <"$1")" conv=notrunc 2>/dev/null
+    rm -f "$1"
+  fi
+}
+
+do_encrypt() {
+  if gpg --list-packets "$TARGET" &>/dev/null; then
+    printf 'Notice: %s is already encrypted. Nothing to do.\n' "$TARGET"
+    return 0
+  fi
+
+  gpg --list-secret-keys --with-colons 2>/dev/null | grep -q '^sec' ||
+    die "No GPG secret key found"
+
+  printf 'Action: Encrypting %s...\n' "$TARGET"
+  gpg --yes --batch --output "$TMPFILE" --encrypt --default-recipient-self "$TARGET" || die "Encryption failed"
+
+  secure_remove "$TARGET"
+  mv "$TMPFILE" "$TARGET"
+  printf 'Success: %s is now encrypted.\n' "$TARGET"
+}
+
+do_decrypt() {
+  if ! gpg --list-packets "$TARGET" &>/dev/null; then
+    printf 'Notice: %s is already plaintext. Nothing to do.\n' "$TARGET"
+    return 0
+  fi
+
+  printf 'Action: Decrypting %s...\n' "$TARGET"
+  gpg --yes --batch --output "$TMPFILE" --decrypt "$TARGET" || die "Decryption failed"
+
+  rm -f "$TARGET"
+  mv "$TMPFILE" "$TARGET"
+  printf 'Success: %s is now plaintext.\n' "$TARGET"
+}
+
+require_cmd gpg
+
+[[ -f "$TARGET" ]] || die "'${TARGET}' not found"
+
+case "${1:-}" in
+-e | --encrypt)
+  do_encrypt
+  ;;
+-d | --decrypt)
+  do_decrypt
+  ;;
+-h | --help)
+  printf "Usage: %s [option]\n\n" "$0"
+  printf "Options:\n"
+  printf "  -e, --encrypt  Encrypt %s (skips if already encrypted)\n" "$TARGET"
+  printf "  -d, --decrypt  Decrypt %s (skips if already plaintext)\n" "$TARGET"
+  ;;
+*)
+  printf "error: unknown or missing option\n" >&2
+  exit 1
+  ;;
+esac

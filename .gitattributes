@@ -4,3 +4,4 @@
 # Mark generated files
 *.lock linguist-generated=true
 *.lock merge=ours
+graphify-out/graph.json merge=graphify

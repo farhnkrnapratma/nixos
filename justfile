@@ -14,6 +14,7 @@ alias d := check
 alias e := encrypt
 alias f := format
 alias g := decrypt
+alias h := hooks
 alias p := push
 alias r := rebuild
 alias s := shell
@@ -43,6 +44,12 @@ alias u := update
   else \
     echo "[just] {{secret_file}} is already encrypted."; \
   fi
+
+[doc("Install the TruffleHog pre-commit hook that scans staged files for secrets")]
+@hooks:
+  echo "[just] Installing Git hooks..."
+  @bash .githooks/install.sh
+  echo "[just] Git hooks installed."
 
 [doc("Remove system garbage and older Nix generations")]
 @clean:

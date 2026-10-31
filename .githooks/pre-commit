@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# SPDX-FileCopyrightText: 2026 Farhan Kurnia Pratama
+#
+# SPDX-License-Identifier: MIT
+
+set -euo pipefail
+
+if ! command -v trufflehog >/dev/null 2>&1; then
+  echo "trufflehog not installed, skipping secret scan (https://github.com/trufflesecurity/trufflehog#installation)" >&2
+  exit 0
+fi
+
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+if [ -z "$staged_files" ]; then
+  exit 0
+fi
+
+if ! echo "$staged_files" | xargs trufflehog filesystem --results=verified --fail --no-update; then
+  echo "" >&2
+  echo "Commit blocked: TruffleHog found verified secret(s) in staged files (see above). Remove them and retry." >&2
+  exit 1
+fi

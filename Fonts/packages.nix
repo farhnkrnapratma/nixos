@@ -2,15 +2,11 @@
   pkgs,
   ...
 }:
-let
-  google-sans = pkgs.callPackage ./GoogleSans { inherit pkgs; };
-  google-sans-code = pkgs.callPackage ./GoogleSansCode { inherit pkgs; };
-in
 {
   fonts.packages = with pkgs; [
-    google-sans
-    google-sans-code
+    noto-fonts
     noto-fonts-cjk-sans
+    jetbrains-mono
     nerd-fonts.jetbrains-mono
   ];
 }

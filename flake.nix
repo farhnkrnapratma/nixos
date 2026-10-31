@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Farhan Kurnia Pratama
+#
+# SPDX-License-Identifier: MIT
+
 {
   description = "A flake for my NixOS and Home Manager configuration";
 

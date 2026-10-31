@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2026 Farhan Kurnia Pratama
+#
+# SPDX-License-Identifier: MIT
+
+version = 1
+
+[[annotations]]
+path = [
+    "**/*.md",
+    "**/*.json",
+    "flake.lock",
+    "env.toml",
+    ".claude/**",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Farhan Kurnia Pratama"
+SPDX-License-Identifier = "MIT"

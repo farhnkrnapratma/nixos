@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+# SPDX-FileCopyrightText: 2026 Farhan Kurnia Pratama
+#
+# SPDX-License-Identifier: MIT
+
 # Synopsis: Secure in-place GPG encryption/decryption for env.toml.
 # This script prevents double-encryption by verifying the file's header.
 # If an encryption attempt is made on an already encrypted file,

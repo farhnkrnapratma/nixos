@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Farhan Kurnia Pratama
+#
+# SPDX-License-Identifier: MIT
+
 set shell := ["/usr/bin/env", "bash", "-euo", "pipefail", "-c"]
 
 envlock_script := "./envcrypt"

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Farhan Kurnia Pratama
+#
+# SPDX-License-Identifier: MIT
+
 {
   networking.timeServers = [
     "0.id.pool.ntp.org"
